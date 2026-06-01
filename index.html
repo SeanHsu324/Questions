@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>工業電子丙級 - 刷題王</title>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']], 
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #2b5876;
+            --secondary: #4e4376;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --border: #e0e0e0;
+            --option-bg: #f8f9fa;
+            --correct: #28a745;
+            --correct-bg: #d4edda;
+            --correct-text: #155724;
+            --wrong: #dc3545;
+            --wrong-bg: #f8d7da;
+            --wrong-text: #721c24;
+        }
+
+        body.dark-mode {
+            --primary: #4e4376;
+            --secondary: #2b5876;
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --text: #e0e0e0;
+            --border: #333333;
+            --option-bg: #2d2d2d;
+            --correct-bg: #1b4332;
+            --correct-text: #72efdd;
+            --wrong-bg: #64111e;
+            --wrong-text: #ffb3c1;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background-color 0.3s, color 0.3s;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* 全域導覽列 */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .theme-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* 容器佈局 */
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* 首頁設定面板 */
+        .setup-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .setup-group {
+            margin-bottom: 22px;
+        }
+
+        .setup-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        select, input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background-color: var(--card-bg);
+            color: var(--text);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        select:disabled, input:disabled {
+            opacity: 0.5;
+            background-color: rgba(0,0,0,0.05);
+            cursor: not-allowed;
+        }
+
+        .radio-set {
+            display: flex;
+            gap: 10px;
+        }
+
+        .radio-btn {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: var(--option-bg);
+            transition: all 0.2s;
+        }
+
+        .radio-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            font-weight: bold;
+        }
+
+        .radio-btn.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .start-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin-top: 10px;
+        }
+
+        /* 測驗中頂部進度資訊 */
+        .quiz-info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        .progress-wrapper {
+            background-color: var(--border);
+            height: 6px;
+            border-radius: 3px;
+            width: 100%;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* 題目核心卡片 */
+        .quiz-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            margin-bottom: 80px; 
+        }
+
+        .quiz-question {
+            font-size: 1.2rem;
+            font-weight: bold;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .quiz-image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .quiz-img {
+            max-width: 100%;
+            max-height: 250px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        /* 選項 */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-item {
+            background-color: var(--option-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s;
+        }
+
+        .option-item:hover {
+            border-color: var(--primary);
+            background-color: rgba(0,0,0,0.02);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary);
+            background-color: rgba(78, 67, 118, 0.1);
+            font-weight: bold;
+        }
+
+        .option-item.correct-reveal {
+            border-color: var(--correct) !important;
+            background-color: var(--correct-bg) !important;
+            color: var(--correct-text) !important;
+            font-weight: bold;
+        }
+
+        .option-item.wrong-reveal {
+            border-color: var(--wrong) !important;
+            background-color: var(--wrong-bg) !important;
+            color: var(--wrong-text) !important;
+        }
+
+        .option-sub-img {
+            max-width: 150px;
+            margin-top: 8px;
+            border-radius: 4px;
+        }
+
+        /* 固定的底部控制列 */
+        footer.control-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            z-index: 90;
+        }
+
+        .nav-btn {
+            background-color: var(--option-bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .action-btn {
+            flex-grow: 1;
+            margin: 0 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* 全螢幕長按放大燈箱 */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        #lightbox img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            background-color: white;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        /* 成績結算報告 */
+        .report-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .score-big {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 15px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+        }
+
+        .badge-pass { background-color: var(--correct-bg); color: var(--correct-text); }
+        .badge-fail { background-color: var(--wrong-bg); color: var(--wrong-text); }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            z-index: 300;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 id="header-title">丙級衝刺智慧刷題王</h1>
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙 夜間模式</button>
+    </header>
+
+    <div class="container" id="app-container">
+        </div>
+
+    <div id="lightbox">
+        <img id="lightbox-img" src="" alt="放大圖">
+    </div>
+
+    <div id="loading-overlay">正在極速組裝試卷...</div>
+
+    <script>
+        // ==================== 全局資料狀態 ====================
+        const JSON_FILES = {
+            "item01": "工作項目02_電子電機識圖.json",
+            "item02": "工作項目03_手工具及量具知識.json",
+            "item03": "工作項目04_零組件知識.json",
+            "item04": "工作項目05_裝配知識.json",
+            "item05": "工作項目06_電子儀表使用知識.json",
+            "item06": "工作項目07_測試知識.json",
+            "item07": "工作項目08_電工學.json",
+            "item08": "工作項目09_電子學.json",
+            "item09": "工作項目10_數位系統.json",
+            "common01": "共同項目01_工作倫理.json",
+            "common02": "共同項目02_節能減碳.json",
+            "common03": "共同項目03_環境保護.json",
+            "common04": "共同項目04_職業安全.json"
+        };
+
+        let dbCache = {}; 
+        let currentExam = {
+            mode: 'sequence', 
+            bankKey: 'item01',
+            feedbackMode: 'A', 
+            customCount: 40,
+            questions: [],     
+            currentIndex: 0,
+            userAnswers: {},   
+            confirmed: {},     
+            timerId: null,
+            timeSpent: 0,      
+            timeLeft: 6000     
+        };
+
+        function cnToAn(cnStr) {
+            const cnDict = {'零':0, '一':1, '二':2, '三':3, '四':4, '五':5, '六':6, '七':7, '八':8, '九':9, '十':10, '百':100, '千':1000};
+            let cn = cnStr.replace('第', '').replace('題', '').trim();
+            if (!isNaN(cn)) return parseInt(cn);
+            let ans = 0, unit = 0;
+            for (let i = 0; i < cn.length; i++) {
+                let val = cnDict[cn[i]] || 0;
+                if (val >= 10) {
+                    if (val > unit) { unit = val; ans = ans === 0 ? val : ans * val; }
+                    else { unit = val; ans += val; }
+                } else {
+                    if (i + 1 < cn.length && cnDict[cn[i+1]] >= 10) ans += val * cnDict[cn[i+1]];
+                    else ans += val;
+                }
+            }
+            if (cn.startsWith('十')) ans += 10;
+            return ans;
+        }
+
+        // ==================== 初始化 ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderLocalStorageSettings();
+            renderHome();
+            preloadAllJson(); 
+            bindGlobalKeydown();
+        });
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-btn').innerText = "☀️ 白天模式";
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.getElementById('theme-btn').innerText = isDark ? "☀️ 白天模式" : "🌙 夜間模式";
+        }
+
+        function renderLocalStorageSettings() {
+            if(!localStorage.getItem('mode')) localStorage.setItem('mode', 'sequence');
+            if(!localStorage.getItem('bankKey')) localStorage.setItem('bankKey', 'item01');
+            if(!localStorage.getItem('feedbackMode')) localStorage.setItem('feedbackMode', 'A');
+            if(!localStorage.getItem('customCount')) localStorage.setItem('customCount', '40');
+        }
+
+        async function preloadAllJson() {
+            for (let key in JSON_FILES) {
+                if (!dbCache[key]) {
+                    fetch(JSON_FILES[key])
+                        .then(res => res.json())
+                        .then(data => { dbCache[key] = data; })
+                        .catch(e => console.warn(`預載失敗: ${JSON_FILES[key]}`));
+                }
+            }
+        }
+
+        // ==================== SPA 視圖 1：首頁 ====================
+        function renderHome() {
+            if(currentExam.timerId) clearInterval(currentExam.timerId);
+            document.getElementById('header-title').innerText = "丙級衝刺刷題網站";
+            
+            const mode = localStorage.getItem('mode');
+            const bankKey = localStorage.getItem('bankKey');
+            const feedbackMode = localStorage.getItem('feedbackMode');
+            const customCount = localStorage.getItem('customCount');
+
+            const isExam = mode === 'exam';
+
+            let html = `
+                <div class="setup-card">
+                    <div class="setup-group">
+                        <label>1. 選擇測驗模式</label>
+                        <div class="radio-set">
+                            <div class="radio-btn ${mode==='sequence'?'active':''}" onclick="setParam('mode','sequence')">循序練習</div>
+                            <div class="radio-btn ${mode==='random'?'active':''}" onclick="setParam('mode','random')">隨機出題</div>
+                            <div class="radio-btn ${mode==='exam'?'active':''}" onclick="setParam('mode','exam')">模擬正式測驗</div>
+                        </div>
+                    </div>
+
+                    <div class="setup-group">
+                        <label>2. 選擇題庫範圍</label>
+                        <select id="bank-select" onchange="setParam('bankKey', this.value)" ${isExam?'disabled':''}>
+                            <option value="item01" ${bankKey==='item01'?'selected':''}>工作項目 02 - 電子電機識圖</option>
+                            <option value="item02" ${bankKey==='item02'?'selected':''}>工作項目 03 - 手工具及量具知識</option>
+                            <option value="item03" ${bankKey==='item03'?'selected':''}>工作項目 04 - 零組件知識</option>
+                            <option value="item04" ${bankKey==='item04'?'selected':''}>工作項目 05 - 裝配知識</option>
+                            <option value="item05" ${bankKey==='item05'?'selected':''}>工作項目 06 - 電子儀表使用知識</option>
+                            <option value="item06" ${bankKey==='item06'?'selected':''}>工作項目 07 - 測試知識</option>
+                            <option value="item07" ${bankKey==='item07'?'selected':''}>工作項目 08 - 電工學</option>
+                            <option value="item08" ${bankKey==='item08'?'selected':''}>工作項目 09 - 電子學</option>
+                            <option value="item09" ${bankKey==='item09'?'selected':''}>工作項目 10 - 數位系統</option>
+                            <option value="common01" ${bankKey==='common01'?'selected':''}>共同項目 01 - 工作倫理</option>
+                            <option value="common02" ${bankKey==='common02'?'selected':''}>共同項目 02 - 節能減碳</option>
+                            <option value="common03" ${bankKey==='common03'?'selected':''}>共同項目 03 - 環境保護</option>
+                            <option value="common04" ${bankKey==='common04'?'selected':''}>共同項目 04 - 職業安全</option>
+                        </select>
+                    </div>
+
+                    <div class="setup-group" id="count-group" style="${isExam?'display:none;':''}">
+                        <label>3. 自訂練習題數</label>
+                        <input type="number" value="${customCount}" min="5" max="200" onchange="setParam('customCount', this.value)">
+                    </div>
+
+                    <div class="setup-group">
+                        <label>${isExam?'3. 答案回饋模式 (已強制鎖定)':'4. 選擇答案回饋模式'}</label>
+                        <div class="radio-set">
+                            <div class="radio-btn ${isExam?'disabled':(feedbackMode==='A'?'active':'')}" onclick="setParam('feedbackMode','A')">模式 A (寫完再對)</div>
+                            <div class="radio-btn ${isExam?'disabled':(feedbackMode==='B'?'active':'')}" onclick="setParam('feedbackMode','B')">模式 B (即時翻牌)</div>
+                        </div>
+                    </div>
+
+                    <button class="start-btn" onclick="buildExamAction()">🚀 開始全力衝刺</button>
+                </div>
+            `;
+            document.getElementById('app-container').innerHTML = html;
+        }
+
+        function setParam(key, val) {
+            localStorage.setItem(key, val);
+            renderHome(); 
+        }
+
+        // ==================== 抽題引擎 ====================
+        async function buildExamAction() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+            
+            const mode = localStorage.getItem('mode');
+            const bankKey = localStorage.getItem('bankKey');
+            const feedbackMode = mode === 'exam' ? 'A' : localStorage.getItem('feedbackMode');
+            const customCount = parseInt(localStorage.getItem('customCount')) || 40;
+
+            for (let k in JSON_FILES) {
+                if (!dbCache[k]) {
+                    try {
+                        let res = await fetch(JSON_FILES[k]);
+                        dbCache[k] = await res.json();
+                    } catch(e) {
+                        alert(`載入題庫失敗: ${JSON_FILES[k]}`);
+                        document.getElementById('loading-overlay').style.display = 'none';
+                        return;
+                    }
+                }
+            }
+
+            let rawQuestions = [];
+            
+            if (mode === 'exam') {
+                const majorKeys = ["item01", "item02", "item03", "item04", "item05", "item06", "item07", "item08", "item09"];
+                const commonKeys = ["common01", "common02", "common03", "common04"];
+                
+                let allMajorsPool = [];
+                majorKeys.forEach(k => {
+                    allMajorsPool = allMajorsPool.concat(flattenBank(dbCache[k], k));
+                });
+                
+                shuffleArray(allMajorsPool);
+                rawQuestions = allMajorsPool.slice(0, 64);
+                
+                commonKeys.forEach(k => {
+                    let pool = flattenBank(dbCache[k], k);
+                    shuffleArray(pool);
+                    rawQuestions = rawQuestions.concat(pool.slice(0, 4));
+                });
+                
+                shuffleArray(rawQuestions); 
+            } else {
+                let pool = flattenBank(dbCache[bankKey], bankKey);
+                if (mode === 'random') {
+                    shuffleArray(pool);
+                    rawQuestions = pool.slice(0, customCount);
+                } else {
+                    pool.sort((a, b) => cnToAn(a.origKey) - cnToAn(b.origKey));
+                    rawQuestions = pool.slice(0, customCount);
+                }
+            }
+
+            currentExam = {
+                mode: mode,
+                bankKey: bankKey,
+                feedbackMode: feedbackMode,
+                questions: rawQuestions,
+                currentIndex: 0,
+                userAnswers: {},
+                confirmed: {},
+                timeSpent: 0,
+                timeLeft: 6000,
+                timerId: null
+            };
+
+            document.getElementById('loading-overlay').style.display = 'none';
+            renderQuizView();
+            startTimer();
+        }
+
+        function flattenBank(jsonObj, bankLabel) {
+            let list = [];
+            for (let k in jsonObj) {
+                list.push({
+                    origKey: k,
+                    bankLabel: bankLabel,
+                    題目: jsonObj[k].題目,
+                    答案: jsonObj[k].答案,
+                    question_img: jsonObj[k].question_img || jsonObj[k].image || jsonObj[k].圖片 || null,
+                    "①": jsonObj[k]["①"] || jsonObj[k]["1"] || "",
+                    "②": jsonObj[k]["②"] || jsonObj[k]["2"] || "",
+                    "③": jsonObj[k]["③"] || jsonObj[k]["3"] || "",
+                    "④": jsonObj[k]["④"] || jsonObj[k]["4"] || "",
+                    "①_img": jsonObj[k]["①_img"] || jsonObj[k]["1_img"] || null,
+                    "②_img": jsonObj[k]["②_img"] || jsonObj[k]["2_img"] || null,
+                    "③_img": jsonObj[k]["③_img"] || jsonObj[k]["3_img"] || null,
+                    "④_img": jsonObj[k]["④_img"] || jsonObj[k]["4_img"] || null
+                });
+            }
+            return list;
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startTimer() {
+            if(currentExam.mode === 'exam') {
+                currentExam.timerId = setInterval(() => {
+                    currentExam.timeLeft--;
+                    updateTimerDisplay();
+                    if(currentExam.timeLeft <= 0) {
+                        clearInterval(currentExam.timerId);
+                        alert("⏱️ 考試時間到！系統已自動為您交卷。");
+                        submitExam();
+                    }
+                }, 1000);
+            } else {
+                currentExam.timerId = setInterval(() => {
+                    currentExam.timeSpent++;
+                    updateTimerDisplay();
+                }, 1000);
+            }
+        }
+
+        function updateTimerDisplay() {
+            const el = document.getElementById('timer-text');
+            if(!el) return;
+            if(currentExam.mode === 'exam') {
+                let m = Math.floor(currentExam.timeLeft / 60);
+                let s = currentExam.timeLeft % 60;
+                el.innerText = `⏳ 倒計時 ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            } else {
+                let m = Math.floor(currentExam.timeSpent / 60);
+                let s = currentExam.timeSpent % 60;
+                el.innerText = `⏱️ 已花費時間 ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            }
+        }
+
+        // ==================== SPA 視圖 2：測驗頁面 ====================
+        function renderQuizView() {
+            const q = currentExam.questions[currentExam.currentIndex];
+            const total = currentExam.questions.length;
+            const idx = currentExam.currentIndex;
+            const pct = Math.round(((idx) / total) * 100);
+
+            document.getElementById('header-title').innerText = currentExam.mode === 'exam' ? "🏆 工業電子丙級模擬學科測驗" : "⚡ 衝刺練習進行中";
+
+            let html = `
+                <div class="quiz-info-bar">
+                    <span>📝 題號：${idx + 1} / ${total} 題</span>
+                    <span id="timer-text">載入時間中...</span>
+                </div>
+                <div class="progress-wrapper">
+                    <div class="progress-bar" style="width: ${pct}%"></div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-question">
+                        (${idx + 1}) ${q.題目}
+                    </div>
+            `;
+
+            if (q.question_img) {
+                html += `
+                    <div class="quiz-image-container">
+                        <img class="quiz-img" src="${q.question_img}" alt="電路圖" id="target-main-img">
+                        <div style="font-size:0.8rem; color:#888; margin-top:5px;">📱 手機端請「長按圖片」放大看細節</div>
+                    </div>
+                `;
+            }
+
+            html += `<div class="options-list">`;
+            for (let num = 1; num <= 4; num++) {
+                const optChinese = ['零', '①', '②', '③', '④'][num];
+                const optText = q[optChinese];
+                const optImg = q[`${optChinese}_img`];
+                
+                let classState = "";
+                if(currentExam.userAnswers[idx] === num) classState = "selected";
+
+                if(currentExam.feedbackMode === 'B') {
+                    if(currentExam.confirmed[idx]) {
+                        if(num == q.答案) {
+                            classState = "correct-reveal";
+                        } else if(currentExam.userAnswers[idx] === num) {
+                            classState = "wrong-reveal";
+                        }
+                    }
+                }
+
+                html += `
+                    <div class="option-item ${classState}" onclick="selectOptionAction(${num})">
+                        <div><strong>${optChinese}</strong> ${optText}</div>
+                `;
+                if(optImg) {
+                    html += `<img class="option-sub-img" src="${optImg}" alt="選項圖">`;
+                }
+                html += `</div>`;
+            }
+            html += `</div></div>`;
+
+            let isModeB = currentExam.feedbackMode === 'B';
+            let hasConfirmedB = currentExam.confirmed[idx];
+            
+            let centerBtnText = "確認答案";
+            if (isModeB && hasConfirmedB) centerBtnText = "下一題";
+            if (isModeB && idx === total - 1 && hasConfirmedB) centerBtnText = "🚀 結束練習，查看報告";
+            if (!isModeB && idx === total - 1) centerBtnText = "🚀 檢查完畢，送出交卷";
+
+            html += `
+                <footer class="control-bar">
+                    <button class="nav-btn" onclick="prevQuestion()" ${isModeB || idx===0 ? 'disabled':''}>← 上一題</button>
+                    <button class="action-btn" onclick="centerActionClick()">${centerBtnText}</button>
+                    <button class="nav-btn" onclick="nextQuestion()" ${isModeB || idx===total-1 ? 'disabled':''}>下一題 →</button>
+                </footer>
+            `;
+
+            document.getElementById('app-container').innerHTML = html;
+            updateTimerDisplay();
+            setupMobileImageEvents();
+
+            if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+                window.MathJax.typesetPromise();
+            }
+        }
+
+        // ==================== 互動與防呆限制邏輯 ====================
+        function selectOptionAction(num) {
+            const idx = currentExam.currentIndex;
+            if(currentExam.feedbackMode === 'B' && currentExam.confirmed[idx]) return;
+            
+            currentExam.userAnswers[idx] = num;
+            
+            const items = document.querySelectorAll('.option-item');
+            items.forEach((item, index) => {
+                item.classList.remove('selected');
+                if(index === (num - 1)) item.classList.add('selected');
+            });
+        }
+
+        function checkCurrentAnswered() {
+            const idx = currentExam.currentIndex;
+            if (!currentExam.userAnswers[idx]) {
+                alert("⚠️ 您尚未選擇本題答案！請作答後才能切換至下一題。");
+                return false;
+            }
+            return true;
+        }
+
+        function centerActionClick() {
+            const idx = currentExam.currentIndex;
+            const total = currentExam.questions.length;
+            const isModeB = currentExam.feedbackMode === 'B';
+
+            if(isModeB) {
+                if(!currentExam.confirmed[idx]) {
+                    if(!currentExam.userAnswers[idx]) { alert("⚠️ 請選取一個選項才能進行翻牌！"); return; }
+                    currentExam.confirmed[idx] = true;
+                    renderQuizView(); 
+                } else {
+                    if(idx === total - 1) {
+                        submitExam();
+                    } else {
+                        nextQuestion();
+                    }
+                }
+            } else {
+                if(idx === total - 1) {
+                    triggerSubmissionFlow();
+                } else {
+                    if (checkCurrentAnswered()) {
+                        nextQuestion();
+                    }
+                }
+            }
+        }
+
+        function nextQuestion() {
+            if (currentExam.feedbackMode === 'A') {
+                if (!checkCurrentAnswered()) return;
+            }
+
+            if(currentExam.currentIndex < currentExam.questions.length - 1) {
+                currentExam.currentIndex++;
+                renderQuizView();
+            }
+        }
+
+        function prevQuestion() {
+            if(currentExam.feedbackMode === 'B') return; 
+            if(currentExam.currentIndex > 0) {
+                currentExam.currentIndex--;
+                renderQuizView();
+            }
+        }
+
+        function triggerSubmissionFlow() {
+            const total = currentExam.questions.length;
+            let answeredCount = Object.keys(currentExam.userAnswers).length;
+            let unansweredCount = total - answeredCount;
+
+            let msg = "確定要正式交卷評分了嗎？";
+            if (unansweredCount > 0) {
+                msg = `⚠️ 警告：您還有 ${unansweredCount} 題尚未作答！\n確定要放棄這些題目並直接交卷嗎？`;
+            }
+
+            if(confirm(msg)) submitExam();
+        }
+
+        function bindGlobalKeydown() {
+            window.addEventListener('keydown', (e) => {
+                const actionBtn = document.querySelector('.action-btn');
+                if(!actionBtn) return; 
+
+                if(e.key === '1') selectOptionAction(1);
+                if(e.key === '2') selectOptionAction(2);
+                if(e.key === '3') selectOptionAction(3);
+                if(e.key === '4') selectOptionAction(4);
+                
+                if(e.key === 'Enter') {
+                    e.preventDefault();
+                    centerActionClick();
+                }
+                if(e.key === 'ArrowLeft') {
+                    prevQuestion();
+                }
+                if(e.key === 'ArrowRight') {
+                    nextQuestion(); 
+                }
+            });
+        }
+
+        function setupMobileImageEvents() {
+            const img = document.getElementById('target-main-img');
+            if(!img) return;
+
+            let pressTimer;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+
+            const startPress = () => {
+                pressTimer = setTimeout(() => {
+                    lightboxImg.src = img.src;
+                    lightbox.style.display = 'flex';
+                }, 500); 
+            };
+
+            const endPress = () => {
+                clearTimeout(pressTimer);
+                lightbox.style.display = 'none';
+            };
+
+            img.addEventListener('touchstart', (e) => { startPress(); });
+            img.addEventListener('touchend', endPress);
+            img.addEventListener('touchmove', endPress);
+
+            img.addEventListener('mousedown', startPress);
+            img.addEventListener('mouseup', endPress);
+            img.addEventListener('mouseleave', endPress);
+        }
+
+        // ==================== ✨ SPA 視圖 3：成績報告 (全新升級) ====================
+        function submitExam() {
+            if(currentExam.timerId) clearInterval(currentExam.timerId);
+            
+            let total = currentExam.questions.length;
+            let correctCount = 0;
+            
+            currentExam.questions.forEach((q, idx) => {
+                if(currentExam.userAnswers[idx] == q.答案) {
+                    correctCount++;
+                }
+            });
+
+            let wrongCount = total - correctCount;
+            let wrongRate = (wrongCount / total) * 100; // 計算錯誤率
+
+            let finalScore = 0;
+            let statusBadgeHtml = "";
+
+            if (currentExam.mode === 'exam') {
+                // 正式模擬考計分機制 (滿分 100 分)
+                finalScore = correctCount * 1.25;
+                if (finalScore >= 60) {
+                    statusBadgeHtml = `<span class="status-badge badge-pass">🎉 恭喜通過模擬學科標準！</span>`;
+                } else {
+                    statusBadgeHtml = `<span class="status-badge badge-fail">❌ 分數未及格，再接再厲！</span>`;
+                }
+            } else {
+                // 循序練習與隨機出題計分機制 (顯示答對百分比 %)
+                finalScore = Math.round((correctCount / total) * 100);
+                
+                
+                if (wrongRate > 50) {
+                    statusBadgeHtml = `<span class="status-badge badge-fail">❌ 錯誤率偏高 (${Math.round(wrongRate)}%)，再接再厲！</span>`;
+                } else {
+                    statusBadgeHtml = `<span class="status-badge badge-pass">🎉 練習完成，繼續保持！</span>`;
+                }
+            }
+
+            document.getElementById('header-title').innerText = "📊 測驗成果報告";
+
+            let html = `
+                <div class="report-card">
+                    <h2>測驗已順利結束！</h2>
+                    <p style="font-size: 1.1rem; color: #666;">
+                        ${currentExam.mode==='exam'?'正式模擬考（滿分 100 分）':'自訂題目練習答題結果'}
+                    </p>
+                    
+                    <div class="score-big">${finalScore}${currentExam.mode==='exam'?'分':'%'}</div>
+                    
+                    <div>
+                        ${statusBadgeHtml}
+                    </div>
+
+                    <p style="font-size:1.1rem; margin-bottom: 30px; line-height: 1.8;">
+                        共計：<strong>${total}</strong> 題 ｜ 
+                        答對：<span style="color:var(--correct); font-weight:bold;">${correctCount}</span> 題 <br>
+                        答錯 / 未答：<span style="color:var(--wrong); font-weight:bold;">${wrongCount}</span> 題 ｜ 
+                        當前錯誤率：<strong>${Math.round(wrongRate)}%</strong>
+                    </p>
+
+                    <button class="start-btn" onclick="renderHome()">返回首頁重設練習</button>
+                </div>
+            `;
+            document.getElementById('app-container').innerHTML = html;
+        }
+    </script>
+</body>
+</html>
