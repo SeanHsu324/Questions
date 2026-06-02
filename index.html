@@ -283,6 +283,9 @@
             max-width: 150px;
             margin-top: 8px;
             border-radius: 4px;
+            border: 1px solid var(--border);
+            background-color: white;
+            cursor: pointer;
         }
 
         /* 固定的底部控制列 */
@@ -383,7 +386,7 @@
         .badge-pass { background-color: var(--correct-bg); color: var(--correct-text); }
         .badge-fail { background-color: var(--wrong-bg); color: var(--wrong-text); }
 
-        /* ✨ 新增：錯題檢討卡片樣式 */
+        /* 錯題檢討卡片樣式 */
         .wrong-review-container {
             margin-top: 20px;
             text-align: left;
@@ -397,6 +400,27 @@
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        /* ✨ 修正：錯題內選項清單排版調整 */
+        .review-options-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: var(--text);
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .review-opt-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background-color: rgba(0,0,0,0.01);
+            padding: 6px 10px;
+            border-radius: 4px;
         }
 
         .wrong-review-meta {
@@ -803,7 +827,7 @@
                         <div><strong>${optChinese}</strong> ${optText}</div>
                 `;
                 if(optImg) {
-                    html += `<img class="option-sub-img" src="${optImg}" alt="選項圖">`;
+                    html += `<img class="option-sub-img dbl-clickable-img" src="${optImg}" alt="選項圖">`;
                 }
                 html += `</div>`;
             }
@@ -1003,7 +1027,6 @@
 
             document.getElementById('header-title').innerText = "📊 測驗成果報告";
 
-            // ✨ 核心修正：判斷是否有錯題，若有則動態生成「查看本次錯題檢討」按鈕
             let reviewBtnHtml = "";
             if(wrongCount > 0) {
                 reviewBtnHtml = `<button class="action-btn" style="margin: 10px 0;" onclick="renderWrongReviewView()">🔍 查看本次錯題檢討</button>`;
@@ -1040,7 +1063,7 @@
             document.getElementById('app-container').innerHTML = html;
         }
 
-        // ==================== ✨ SPA 視圖 4：全新獨立錯題檢閱頁面 ====================
+        // ==================== SPA 視圖 4：全新獨立錯題檢閱頁面 ====================
         function renderWrongReviewView() {
             document.getElementById('header-title').innerText = "🔍 本次錯題加強檢討";
             
@@ -1053,7 +1076,6 @@
 
             let wrongIndex = 1;
             currentExam.questions.forEach((q, idx) => {
-                // 篩選出使用者答錯的題目
                 if (currentExam.userAnswers[idx] != q.答案) {
                     const optChinese = ['未作答', '①', '②', '③', '④'];
                     const userAnsText = currentExam.userAnswers[idx] ? optChinese[currentExam.userAnswers[idx]] : "未作答";
@@ -1066,7 +1088,7 @@
                             </div>
                     `;
 
-                    // 處理錯題中的圖片
+                    // 處理題目的主圖片
                     if (q.question_img) {
                         html += `
                             <div class="quiz-image-container" style="text-align:left; margin-bottom:12px;">
@@ -1075,12 +1097,22 @@
                         `;
                     }
 
-                    // 列出該題的所有四個選項以利檢討
-                    html += `<div style="font-size:0.95rem; color:var(--text); opacity:0.85; margin-bottom:10px; line-height:1.5;">`;
-                    if(q["①"]) html += `<div>① ${q["①"]}</div>`;
-                    if(q["②"]) html += `<div>② ${q["②"]}</div>`;
-                    if(q["③"]) html += `<div>③ ${q["③"]}</div>`;
-                    if(q["④"]) html += `<div>④ ${q["④"]}</div>`;
+                    // ✨ ✨ 核心優化：渲染 4 個選項，若選項有圖片則一併渲染出來並綁定放大
+                    html += `<div class="review-options-box">`;
+                    for (let n = 1; n <= 4; n++) {
+                        const ch = ['零', '①', '②', '③', '④'][n];
+                        const text = q[ch];
+                        const imgField = q[`${ch}_img`];
+
+                        if (text || imgField) {
+                            html += `<div class="review-opt-item">`;
+                            html += `<div><strong>${ch}</strong> ${text}</div>`;
+                            if (imgField) {
+                                html += `<img class="option-sub-img dbl-clickable-img" src="${imgField}" alt="選項圖">`;
+                            }
+                            html += `</div>`;
+                        }
+                    }
                     html += `</div>`;
 
                     // 標記答案對比
@@ -1103,13 +1135,12 @@
             `;
 
             document.getElementById('app-container').innerHTML = html;
-            setupMobileImageEvents(); // 重新綁定錯題清單中的雙擊放大事件
+            setupMobileImageEvents(); // 重新將題目主圖及選項圖片綁定雙擊放大
 
             if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
                 window.MathJax.typesetPromise();
             }
             
-            // 頁面自動滾動回最上方
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
