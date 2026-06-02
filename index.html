@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>工業電子丙級 - 智慧衝刺刷題王</title>
+    <title>工業電子丙級 - 刷題網</title>
     
     <script>
         window.MathJax = {
@@ -464,7 +464,7 @@
 <body>
 
     <header>
-        <h1 id="header-title">丙級衝刺智慧刷題王</h1>
+        <h1 id="header-title">丙級刷題網站</h1>
         <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙 夜間模式</button>
     </header>
 
@@ -573,7 +573,7 @@
         // ==================== SPA 視圖 1：首頁 ====================
         function renderHome() {
             if(currentExam.timerId) clearInterval(currentExam.timerId);
-            document.getElementById('header-title').innerText = "丙級衝刺智慧刷題王";
+            document.getElementById('header-title').innerText = "丙級刷題網站";
             
             const mode = localStorage.getItem('mode');
             const bankKey = localStorage.getItem('bankKey');
@@ -596,19 +596,19 @@
                     <div class="setup-group">
                         <label>2. 選擇題庫範圍</label>
                         <select id="bank-select" onchange="setParam('bankKey', this.value)" ${isExam?'disabled':''}>
-                            <option value="item01" ${bankKey==='item01'?'selected':''}>工作項目 02 - 電子電機識圖</option>
-                            <option value="item02" ${bankKey==='item02'?'selected':''}>工作項目 03 - 手工具及量具知識</option>
-                            <option value="item03" ${bankKey==='item03'?'selected':''}>工作項目 04 - 零組件知識</option>
-                            <option value="item04" ${bankKey==='item04'?'selected':''}>工作項目 05 - 裝配知識</option>
-                            <option value="item05" ${bankKey==='item05'?'selected':''}>工作項目 06 - 電子儀表使用知識</option>
-                            <option value="item06" ${bankKey==='item06'?'selected':''}>工作項目 07 - 測試知識</option>
-                            <option value="item07" ${bankKey==='item07'?'selected':''}>工作項目 08 - 電工學</option>
-                            <option value="item08" ${bankKey==='item08'?'selected':''}>工作項目 09 - 電子學</option>
-                            <option value="item09" ${bankKey==='item09'?'selected':''}>工作項目 10 - 數位系統</option>
-                            <option value="common01" ${bankKey==='common01'?'selected':''}>共同項目 01 - 工作倫理</option>
-                            <option value="common02" ${bankKey==='common02'?'selected':''}>共同項目 02 - 節能減碳</option>
-                            <option value="common03" ${bankKey==='common03'?'selected':''}>共同項目 03 - 環境保護</option>
-                            <option value="common04" ${bankKey==='common04'?'selected':''}>共同項目 04 - 職業安全</option>
+                            <option value="item01" ${bankKey==='item01'?'selected':''}>工作項目 02 - 電子電機識圖 (共57題)</option>
+                            <option value="item02" ${bankKey==='item02'?'selected':''}>工作項目 03 - 手工具及量具知識 (共56題)</option>
+                            <option value="item03" ${bankKey==='item03'?'selected':''}>工作項目 04 - 零組件知識 (共51題)</option>
+                            <option value="item04" ${bankKey==='item04'?'selected':''}>工作項目 05 - 裝配知識 (共55題)</option>
+                            <option value="item05" ${bankKey==='item05'?'selected':''}>工作項目 06 - 電子儀表使用知識 (共44題)</option>
+                            <option value="item06" ${bankKey==='item06'?'selected':''}>工作項目 07 - 測試知識 (共48題)</option>
+                            <option value="item07" ${bankKey==='item07'?'selected':''}>工作項目 08 - 電工學 (共128題)</option>
+                            <option value="item08" ${bankKey==='item08'?'selected':''}>工作項目 09 - 電子學 (共147題)</option>
+                            <option value="item09" ${bankKey==='item09'?'selected':''}>工作項目 10 - 數位系統 (共65題)</option>
+                            <option value="common01" ${bankKey==='common01'?'selected':''}>共同項目 01 - 工作倫理 (共100題)</option>
+                            <option value="common02" ${bankKey==='common02'?'selected':''}>共同項目 02 - 節能減碳 (共100題)</option>
+                            <option value="common03" ${bankKey==='common03'?'selected':''}>共同項目 03 - 環境保護 (共100題)</option>
+                            <option value="common04" ${bankKey==='common04'?'selected':''}>共同項目 04 - 職業安全 (共100題)</option>
                         </select>
                     </div>
 
