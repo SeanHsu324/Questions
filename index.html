@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>工業電子丙級 - 刷題網</title>
+    <title>工業電子丙級 - 智慧衝刺刷題王</title>
     
     <script>
         window.MathJax = {
@@ -343,7 +343,7 @@
             justify-content: center;
             align-items: center;
             z-index: 200;
-            cursor: pointer; /* 點擊任何地方皆可關閉 */
+            cursor: pointer;
         }
 
         #lightbox img {
@@ -382,6 +382,47 @@
 
         .badge-pass { background-color: var(--correct-bg); color: var(--correct-text); }
         .badge-fail { background-color: var(--wrong-bg); color: var(--wrong-text); }
+
+        /* ✨ 新增：錯題檢討卡片樣式 */
+        .wrong-review-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .wrong-review-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--wrong);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .wrong-review-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        .meta-user { color: var(--wrong); background-color: var(--wrong-bg); padding: 4px 10px; border-radius: 4px; }
+        .meta-correct { color: var(--correct); background-color: var(--correct-bg); padding: 4px 10px; border-radius: 4px; }
+
+        .secondary-btn {
+            width: 100%;
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
         #loading-overlay {
             position: fixed;
@@ -508,7 +549,7 @@
         // ==================== SPA 視圖 1：首頁 ====================
         function renderHome() {
             if(currentExam.timerId) clearInterval(currentExam.timerId);
-            document.getElementById('header-title').innerText = "丙級衝刺刷題網站";
+            document.getElementById('header-title').innerText = "丙級衝刺智慧刷題王";
             
             const mode = localStorage.getItem('mode');
             const bankKey = localStorage.getItem('bankKey');
@@ -732,7 +773,7 @@
             if (q.question_img) {
                 html += `
                     <div class="quiz-image-container">
-                        <img class="quiz-img" src="${q.question_img}" alt="電路圖" id="target-main-img">
+                        <img class="quiz-img dbl-clickable-img" src="${q.question_img}" alt="電路圖">
                         <div style="font-size:0.8rem; color:#888; margin-top:5px;">📱 提示：點擊圖片「兩下」可放大看完整細節</div>
                     </div>
                 `;
@@ -899,27 +940,25 @@
             });
         }
 
-        // ==================== ✨ 新增：雙擊（點兩下）放大邏輯 ====================
+        // ==================== 雙擊（點兩下）放大邏輯 ====================
         function setupMobileImageEvents() {
-            const img = document.getElementById('target-main-img');
-            if(!img) return;
-
-            let lastTap = 0;
+            const imgs = document.querySelectorAll('.dbl-clickable-img');
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
 
-            // 完美的跨平台（手機/電腦）連點兩下放大判定
-            img.addEventListener('click', (e) => {
-                const now = new Date().getTime();
-                const timespan = now - lastTap;
-                
-                if (timespan < 300 && timespan > 0) {
-                    // 觸發連點兩下
-                    lightboxImg.src = img.src;
-                    lightbox.style.display = 'flex';
-                    e.preventDefault();
-                }
-                lastTap = now;
+            imgs.forEach(img => {
+                let lastTap = 0;
+                img.addEventListener('click', (e) => {
+                    const now = new Date().getTime();
+                    const timespan = now - lastTap;
+                    
+                    if (timespan < 300 && timespan > 0) {
+                        lightboxImg.src = img.src;
+                        lightbox.style.display = 'flex';
+                        e.preventDefault();
+                    }
+                    lastTap = now;
+                });
             });
         }
 
@@ -964,6 +1003,14 @@
 
             document.getElementById('header-title').innerText = "📊 測驗成果報告";
 
+            // ✨ 核心修正：判斷是否有錯題，若有則動態生成「查看本次錯題檢討」按鈕
+            let reviewBtnHtml = "";
+            if(wrongCount > 0) {
+                reviewBtnHtml = `<button class="action-btn" style="margin: 10px 0;" onclick="renderWrongReviewView()">🔍 查看本次錯題檢討</button>`;
+            } else {
+                reviewBtnHtml = `<p style="color:var(--correct); font-weight:bold; margin:15px 0;">🎉 完美滿分！無錯題需要檢討！</p>`;
+            }
+
             let html = `
                 <div class="report-card">
                     <h2>測驗已順利結束！</h2>
@@ -977,17 +1024,93 @@
                         ${statusBadgeHtml}
                     </div>
 
-                    <p style="font-size:1.1rem; margin-bottom: 30px; line-height: 1.8;">
+                    <p style="font-size:1.1rem; margin-bottom: 20px; line-height: 1.8;">
                         共計：<strong>${total}</strong> 題 ｜ 
                         答對：<span style="color:var(--correct); font-weight:bold;">${correctCount}</span> 題 <br>
                         答錯 / 未答：<span style="color:var(--wrong); font-weight:bold;">${wrongCount}</span> 題 ｜ 
                         當前錯誤率：<strong>${Math.round(wrongRate)}%</strong>
                     </p>
 
-                    <button class="start-btn" onclick="renderHome()">返回首頁重設練習</button>
+                    <div style="max-width:400px; margin: 0 auto 15px auto;">
+                        ${reviewBtnHtml}
+                        <button class="secondary-btn" onclick="renderHome()">返回首頁重設練習</button>
+                    </div>
                 </div>
             `;
             document.getElementById('app-container').innerHTML = html;
+        }
+
+        // ==================== ✨ SPA 視圖 4：全新獨立錯題檢閱頁面 ====================
+        function renderWrongReviewView() {
+            document.getElementById('header-title').innerText = "🔍 本次錯題加強檢討";
+            
+            let html = `
+                <div class="setup-card">
+                    <h2 style="margin-top:0; color:var(--wrong);">錯題清單檢閱</h2>
+                    <p style="color:#666; margin-bottom:25px;">系統已自動過濾出答錯或未答的題目，請仔細比對正確答案與線路圖。</p>
+                    <div class="wrong-review-container">
+            `;
+
+            let wrongIndex = 1;
+            currentExam.questions.forEach((q, idx) => {
+                // 篩選出使用者答錯的題目
+                if (currentExam.userAnswers[idx] != q.答案) {
+                    const optChinese = ['未作答', '①', '②', '③', '④'];
+                    const userAnsText = currentExam.userAnswers[idx] ? optChinese[currentExam.userAnswers[idx]] : "未作答";
+                    const correctAnsText = optChinese[q.答案];
+
+                    html += `
+                        <div class="wrong-review-card">
+                            <div class="quiz-question" style="font-size:1.1rem; margin-bottom:12px;">
+                                <strong>錯題 ${wrongIndex}</strong> (原第 ${idx + 1} 題)：${q.題目}
+                            </div>
+                    `;
+
+                    // 處理錯題中的圖片
+                    if (q.question_img) {
+                        html += `
+                            <div class="quiz-image-container" style="text-align:left; margin-bottom:12px;">
+                                <img class="quiz-img dbl-clickable-img" src="${q.question_img}" alt="電路圖" style="max-height:160px;">
+                            </div>
+                        `;
+                    }
+
+                    // 列出該題的所有四個選項以利檢討
+                    html += `<div style="font-size:0.95rem; color:var(--text); opacity:0.85; margin-bottom:10px; line-height:1.5;">`;
+                    if(q["①"]) html += `<div>① ${q["①"]}</div>`;
+                    if(q["②"]) html += `<div>② ${q["②"]}</div>`;
+                    if(q["③"]) html += `<div>③ ${q["③"]}</div>`;
+                    if(q["④"]) html += `<div>④ ${q["④"]}</div>`;
+                    html += `</div>`;
+
+                    // 標記答案對比
+                    html += `
+                            <div class="wrong-review-meta">
+                                <span class="meta-user">您的答案：${userAnsText} ❌</span>
+                                <span class="meta-correct">正確答案：${correctAnsText} 💡</span>
+                            </div>
+                        </div>
+                    `;
+                    wrongIndex++;
+                }
+            });
+
+            html += `
+                    </div>
+                    <button class="start-btn" style="margin-top:20px;" onclick="submitExam()">返回成績報告</button>
+                    <button class="secondary-btn" onclick="renderHome()">返回首頁重設練習</button>
+                </div>
+            `;
+
+            document.getElementById('app-container').innerHTML = html;
+            setupMobileImageEvents(); // 重新綁定錯題清單中的雙擊放大事件
+
+            if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+                window.MathJax.typesetPromise();
+            }
+            
+            // 頁面自動滾動回最上方
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
