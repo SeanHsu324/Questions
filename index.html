@@ -448,6 +448,36 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
+        /* Toggle switch for custom count */
+        .toggle-switch {
+            display: inline-flex;
+            align-items: center;
+            width: 40px;
+            height: 22px;
+            background-color: var(--border);
+            border-radius: 11px;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background-color 0.25s;
+        }
+        .toggle-switch.on {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        .toggle-knob {
+            position: absolute;
+            left: 3px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            transition: left 0.25s;
+        }
+        .toggle-switch.on .toggle-knob {
+            left: 21px;
+        }
+
         #loading-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -475,9 +505,9 @@
         <img id="lightbox-img" src="" alt="放大圖">
     </div>
 
-    <div id="loading-overlay">正在組裝試卷...</div>
+    <div id="loading-overlay">正在極速組裝試卷...</div>
 
-    
+    <!-- 右下角 Instagram 連結 -->
     <a href="https://www.instagram.com/ha_sean11/" target="_blank" rel="noopener noreferrer" id="ig-badge">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white" style="flex-shrink:0;">
             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
@@ -590,6 +620,7 @@
             if(!localStorage.getItem('mode')) localStorage.setItem('mode', 'sequence');
             if(!localStorage.getItem('bankKey')) localStorage.setItem('bankKey', 'item01');
             if(!localStorage.getItem('feedbackMode')) localStorage.setItem('feedbackMode', 'A');
+            if(!localStorage.getItem('customEnabled')) localStorage.setItem('customEnabled', 'true');
             if(!localStorage.getItem('customCount')) localStorage.setItem('customCount', '40');
         }
 
@@ -616,6 +647,7 @@
             const customCount = localStorage.getItem('customCount');
 
             const isExam = mode === 'exam';
+            const customEnabled = localStorage.getItem('customEnabled') !== 'false'; // 預設 true
 
             let html = `
                 <div class="setup-card">
@@ -648,8 +680,14 @@
                     </div>
 
                     <div class="setup-group" id="count-group" style="${isExam?'display:none;':''}">
-                        <label>3. 自訂練習題數</label>
-                        <input type="number" value="${customCount}" min="5" max="200" onchange="setParam('customCount', this.value)">
+                        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; user-select:none;">
+                            3. 自訂練習題數
+                            <span class="toggle-switch ${customEnabled?'on':''}" onclick="toggleCustomCount()" title="${customEnabled?'已啟用自訂題數':'使用全部題目'}">
+                                <span class="toggle-knob"></span>
+                            </span>
+                            <span style="font-size:0.8rem; font-weight:normal; color:${customEnabled?'var(--primary)':'#aaa'};">${customEnabled?'已啟用':'全部題目'}</span>
+                        </label>
+                        <input type="number" value="${customCount}" min="5" max="200" onchange="setParam('customCount', this.value)" ${customEnabled?'':'disabled'}>
                     </div>
 
                     <div class="setup-group">
@@ -671,6 +709,12 @@
             renderHome(); 
         }
 
+        function toggleCustomCount() {
+            const current = localStorage.getItem('customEnabled') !== 'false';
+            localStorage.setItem('customEnabled', (!current).toString());
+            renderHome();
+        }
+
         // ==================== 抽題引擎 ====================
         async function buildExamAction() {
             document.getElementById('loading-overlay').style.display = 'flex';
@@ -679,6 +723,7 @@
             const bankKey = localStorage.getItem('bankKey');
             const feedbackMode = mode === 'exam' ? 'A' : localStorage.getItem('feedbackMode');
             const customCount = parseInt(localStorage.getItem('customCount')) || 40;
+            const customEnabled = localStorage.getItem('customEnabled') !== 'false';
 
             for (let k in JSON_FILES) {
                 if (!dbCache[k]) {
@@ -718,10 +763,10 @@
                 let pool = flattenBank(dbCache[bankKey], bankKey);
                 if (mode === 'random') {
                     shuffleArray(pool);
-                    rawQuestions = pool.slice(0, customCount);
+                    rawQuestions = customEnabled ? pool.slice(0, customCount) : pool;
                 } else {
                     pool.sort((a, b) => cnToAn(a.origKey) - cnToAn(b.origKey));
-                    rawQuestions = pool.slice(0, customCount);
+                    rawQuestions = customEnabled ? pool.slice(0, customCount) : pool;
                 }
             }
 
