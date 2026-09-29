@@ -1,0 +1,432 @@
+{
+  "第一題": {
+    "題目": "下圖為",
+    "question_img": "images/item01_Q001_title.png",
+    "①": "1K×8的ROM",
+    "①_img": null,
+    "②": "2K×8的ROM",
+    "②_img": null,
+    "③": "1K×8的RAM",
+    "③_img": null,
+    "④": "2K×8的RAM",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第二題": {
+    "題目": "下圖在電路中代表",
+    "question_img": "images/item01_Q002_title.png",
+    "①": "解多工器",
+    "①_img": null,
+    "②": "多工器",
+    "②_img": null,
+    "③": "跳線",
+    "③_img": null,
+    "④": "解碼器",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第三題": {
+    "題目": "下圖為",
+    "question_img": "images/item01_Q003_title.png",
+    "①": "256×1DRAM",
+    "①_img": null,
+    "②": "256×1SRAM",
+    "②_img": null,
+    "③": "64K×1DRAM",
+    "③_img": null,
+    "④": "64K×1SRAM",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第四題": {
+    "題目": "下圖為",
+    "question_img": "images/item01_Q004_title.png",
+    "①": "非穩態振盪器",
+    "①_img": null,
+    "②": "雙穩態電路",
+    "②_img": null,
+    "③": "單穩態電路",
+    "③_img": null,
+    "④": "三態電路",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第五題": {
+    "題目": "下圖為何種電路符號？",
+    "question_img": "images/item01_Q005_title.png",
+    "①": "傳輸閘",
+    "①_img": null,
+    "②": "緩衝器",
+    "②_img": null,
+    "③": "放大器",
+    "③_img": null,
+    "④": "非反相器",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第六題": {
+    "題目": "下圖為",
+    "question_img": "images/item01_Q006_title.png",
+    "①": "DIAC",
+    "①_img": null,
+    "②": "SUS",
+    "②_img": null,
+    "③": "SSS",
+    "③_img": null,
+    "④": "SBS",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第七題": {
+    "題目": "下圖之接點符號為下列何種接點？",
+    "question_img": "images/item01_Q007_title.png",
+    "①": "a接點",
+    "①_img": null,
+    "②": "b接點",
+    "②_img": null,
+    "③": "c接點",
+    "③_img": null,
+    "④": "N.O.接點",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第八題": {
+    "題目": "下圖之符號為下列何種電路圖符號？",
+    "question_img": "images/item01_Q008_title.png",
+    "①": "比流器",
+    "①_img": null,
+    "②": "比壓器",
+    "②_img": null,
+    "③": "電感器",
+    "③_img": null,
+    "④": "變壓器",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第九題": {
+    "題目": "下圖之符號為下列何種電路圖符號？",
+    "question_img": "images/item01_Q009_title.png",
+    "①": "GTO",
+    "①_img": null,
+    "②": "IGBT",
+    "②_img": null,
+    "③": "SIT",
+    "③_img": null,
+    "④": "SITH",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第十題": {
+    "題目": "下圖之符號為下列何種電路圖符號？",
+    "question_img": "images/item01_Q010_title.png",
+    "①": "RCT",
+    "①_img": null,
+    "②": "MCT",
+    "②_img": null,
+    "③": "SUS",
+    "③_img": null,
+    "④": "SBS",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第十一題": {
+    "題目": "下圖之符號為下列何種電路圖符號？",
+    "question_img": "images/item01_Q011_title.png",
+    "①": "RCT",
+    "①_img": null,
+    "②": "MCT",
+    "②_img": null,
+    "③": "SUS",
+    "③_img": null,
+    "④": "SBS",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第十二題": {
+    "題目": "下圖之符號為下列何種電路圖符號？",
+    "question_img": "images/item01_Q012_title.png",
+    "①": "空乏型N通道MOSFET",
+    "①_img": null,
+    "②": "增強型N通道MOSFET",
+    "②_img": null,
+    "③": "空乏型P通道MOSFET",
+    "③_img": null,
+    "④": "增強型P通道MOSFET",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第十三題": {
+    "題目": "下圖之電腦流程圖符號為",
+    "question_img": "images/item01_Q013_title.png",
+    "①": "處理",
+    "①_img": null,
+    "②": "判斷",
+    "②_img": null,
+    "③": "開始",
+    "③_img": null,
+    "④": "輸出",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第十四題": {
+    "題目": "下列何者為示波器測試棒的等效電路？",
+    "question_img": null,
+    "①": "",
+    "①_img": "images/item01_Q014_opt1.png",
+    "②": "",
+    "②_img": "images/item01_Q014_opt2.png",
+    "③": "",
+    "③_img": "images/item01_Q014_opt3.png",
+    "④": "",
+    "④_img": "images/item01_Q014_opt4.png",
+    "答案": [
+      4
+    ]
+  },
+  "第十五題": {
+    "題目": "已知下圖中，a圖與b圖為兩電子符號，則",
+    "question_img": "images/item01_Q015_title.png",
+    "①": "a為PUT，b為SCR",
+    "①_img": null,
+    "②": "a為SCR，b為PUT",
+    "②_img": null,
+    "③": "a為SCR，b為SCS",
+    "③_img": null,
+    "④": "a為PUT，b為SCS元件",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第十六題": {
+    "題目": "下圖為何種電路符號？",
+    "question_img": "images/item01_Q016_title.png",
+    "①": "RCT（Reverse Conducting Thyristor）",
+    "①_img": null,
+    "②": "MCT（MOS-Controlled Thyristor）",
+    "②_img": null,
+    "③": "SCS（Silicon Controlled Switch）",
+    "③_img": null,
+    "④": "SBS（Silicon Bilateral Switch）",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第十七題": {
+    "題目": "依據美國國家標準協會（ANSI）編製的標準流程圖符號，下列何者名稱與其符號並不相符？",
+    "question_img": null,
+    "①": "處理",
+    "①_img": "images/item01_Q017_opt1.png",
+    "②": "判斷",
+    "②_img": "images/item01_Q017_opt2.png",
+    "③": "列印",
+    "③_img": "images/item01_Q017_opt3.png",
+    "④": "副程式",
+    "④_img": "images/item01_Q017_opt4.png",
+    "答案": [
+      2
+    ]
+  },
+  "第十八題": {
+    "題目": "下列何者並不屬於閘流體（Thyristor）裝置？",
+    "question_img": null,
+    "①": "",
+    "①_img": "images/item01_Q018_opt1.png",
+    "②": "",
+    "②_img": "images/item01_Q018_opt2.png",
+    "③": "",
+    "③_img": "images/item01_Q018_opt3.png",
+    "④": "",
+    "④_img": "images/item01_Q018_opt4.png",
+    "答案": [
+      3
+    ]
+  },
+  "第十九題": {
+    "題目": "下圖之符號為何種元件？",
+    "question_img": "images/item01_Q019_title.png",
+    "①": "Thermistor",
+    "①_img": null,
+    "②": "光敏電阻",
+    "②_img": null,
+    "③": "NTC型溫度電阻",
+    "③_img": null,
+    "④": "Photocell",
+    "④_img": null,
+    "答案": [
+      2,
+      4
+    ]
+  },
+  "第二十題": {
+    "題目": "下圖為低態動作的三態閘，下列敘述何者正確？",
+    "question_img": "images/item01_Q020_title.png",
+    "①": "當B=0時，C=A=1",
+    "①_img": null,
+    "②": "當B=0時，C=A=0",
+    "②_img": null,
+    "③": "當B=1時，C=A=1",
+    "③_img": null,
+    "④": "當B=1時，C=A=0",
+    "④_img": null,
+    "答案": [
+      1,
+      2
+    ]
+  },
+  "第二十一題": {
+    "題目": "下圖所示，下列敘述何者正確？",
+    "question_img": "images/item01_Q021_title.png",
+    "①": "互補式輸出的緩衝器，當D=0時，E=0及F=1",
+    "①_img": null,
+    "②": "互補式輸出的緩衝器，當D=1時，E=1及F=0",
+    "②_img": null,
+    "③": "互補式輸出的反相器，當D=0時，E=1及F=0",
+    "③_img": null,
+    "④": "互補式輸出的反相器，當D=1時，E=0及F=1",
+    "④_img": null,
+    "答案": [
+      1,
+      2
+    ]
+  },
+  "第二十二題": {
+    "題目": "下圖所示，下列敘述何者正確？",
+    "question_img": "images/item01_Q022_title.png",
+    "①": "T₁為NMOS元件",
+    "①_img": null,
+    "②": "T₁為PMOS元件",
+    "②_img": null,
+    "③": "T₂為PMOS元件",
+    "③_img": null,
+    "④": "T₂為NMOS元件",
+    "④_img": null,
+    "答案": [
+      2,
+      4
+    ]
+  },
+  "第二十三題": {
+    "題目": "下列圖示哪些是與光電有關的組件？",
+    "question_img": null,
+    "①": "",
+    "①_img": "images/item01_Q023_opt1.png",
+    "②": "",
+    "②_img": "images/item01_Q023_opt2.png",
+    "③": "",
+    "③_img": "images/item01_Q023_opt3.png",
+    "④": "",
+    "④_img": "images/item01_Q023_opt4.png",
+    "答案": [
+      1,
+      2
+    ]
+  },
+  "第二十四題": {
+    "題目": "下列圖示哪些為被動元件？",
+    "question_img": null,
+    "①": "",
+    "①_img": "images/item01_Q024_opt1.png",
+    "②": "",
+    "②_img": "images/item01_Q024_opt2.png",
+    "③": "",
+    "③_img": "images/item01_Q024_opt3.png",
+    "④": "",
+    "④_img": "images/item01_Q024_opt4.png",
+    "答案": [
+      1,
+      3
+    ]
+  },
+  "第二十五題": {
+    "題目": "下列圖示哪些為主動元件？",
+    "question_img": null,
+    "①": "",
+    "①_img": "images/item01_Q025_opt1.png",
+    "②": "",
+    "②_img": "images/item01_Q025_opt2.png",
+    "③": "",
+    "③_img": "images/item01_Q025_opt3.png",
+    "④": "",
+    "④_img": "images/item01_Q025_opt4.png",
+    "答案": [
+      3,
+      4
+    ]
+  },
+  "第二十六題": {
+    "題目": "依據美國國家標準協會（ANSI）編製的標準流程圖符號，下列符號表示何者正確？",
+    "question_img": null,
+    "①": "處理",
+    "①_img": "images/item01_Q026_opt1.png",
+    "②": "迴圈",
+    "②_img": "images/item01_Q026_opt2.png",
+    "③": "判斷",
+    "③_img": "images/item01_Q026_opt3.png",
+    "④": "結束",
+    "④_img": "images/item01_Q026_opt4.png",
+    "答案": [
+      2,
+      4
+    ]
+  },
+  "第二十七題": {
+    "題目": "下列何者工作於逆向偏壓？",
+    "question_img": null,
+    "①": "",
+    "①_img": "images/item01_Q027_opt1.png",
+    "②": "",
+    "②_img": "images/item01_Q027_opt2.png",
+    "③": "",
+    "③_img": "images/item01_Q027_opt3.png",
+    "④": "",
+    "④_img": "images/item01_Q027_opt4.png",
+    "答案": [
+      2,
+      3
+    ]
+  },
+  "第二十八題": {
+    "題目": "有關印刷電路板元件面的安排與繪製，下列敘述何者正確？",
+    "question_img": null,
+    "①": "以IC或電晶體位置為中心向外安排其他元件",
+    "①_img": null,
+    "②": "IC依形狀擺放不需特別標示腳位",
+    "②_img": null,
+    "③": "連接器必須標示第一腳位",
+    "③_img": null,
+    "④": "並排電阻盡量靠近以節省空間及連接線",
+    "④_img": null,
+    "答案": [
+      1,
+      3
+    ]
+  }
+}

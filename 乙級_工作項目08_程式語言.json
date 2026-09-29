@@ -1,0 +1,1234 @@
+{
+  "第一題": {
+    "題目": "虛擬指令（pseudo instruction）之功用為",
+    "question_img": null,
+    "①": "作編譯指示",
+    "①_img": null,
+    "②": "供註解之用",
+    "②_img": null,
+    "③": "產生機器碼",
+    "③_img": null,
+    "④": "可加快編譯速度",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第二題": {
+    "題目": "巨集（Macro）指令可",
+    "question_img": null,
+    "①": "加快執行速度",
+    "①_img": null,
+    "②": "加速編譯速度",
+    "②_img": null,
+    "③": "方便程式撰寫",
+    "③_img": null,
+    "④": "節省記憶體空間",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第三題": {
+    "題目": "有關CPU內的旗標暫存器敘述，下列何者錯誤？",
+    "question_img": null,
+    "①": "溢位旗標為1時，表示運算結果超出範圍",
+    "①_img": null,
+    "②": "陷阱（Trap）旗標為1時表示進入單步執行",
+    "②_img": null,
+    "③": "中斷旗標為0時表示不接受罩幕式中斷",
+    "③_img": null,
+    "④": "零值旗標為1時表示邏輯運算結果為1",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第四題": {
+    "題目": "在程式語言中，下列何者不是「副程式」與「巨集」的共同優點？",
+    "question_img": null,
+    "①": "可避免程式重複",
+    "①_img": null,
+    "②": "程式易讀、易除錯",
+    "②_img": null,
+    "③": "程式撰寫易",
+    "③_img": null,
+    "④": "可節省程式及記憶體的空間",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第五題": {
+    "題目": "連結（link）程式執行後，如果無誤，將產生可重置（Relocatable）的",
+    "question_img": null,
+    "①": "目的檔",
+    "①_img": null,
+    "②": "執行檔",
+    "②_img": null,
+    "③": "列表檔",
+    "③_img": null,
+    "④": "函數檔",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第六題": {
+    "題目": "一個位元組（Byte）可以儲存一個ASCII字碼或幾個BCD碼？",
+    "question_img": null,
+    "①": "1",
+    "①_img": null,
+    "②": "2",
+    "②_img": null,
+    "③": "3",
+    "③_img": null,
+    "④": "4",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第七題": {
+    "題目": "執行下列C語言程式，其輸出結果為何？",
+    "question_img": "images/item08_Q007_title.png",
+    "①": "2",
+    "①_img": null,
+    "②": "7",
+    "②_img": null,
+    "③": "1",
+    "③_img": null,
+    "④": "6",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第八題": {
+    "題目": "C語言中，下列何者是有效的識別字（identifier）？",
+    "question_img": null,
+    "①": "_name",
+    "①_img": null,
+    "②": "1_name",
+    "②_img": null,
+    "③": "#name",
+    "③_img": null,
+    "④": "my name",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第九題": {
+    "題目": "下列何者可作為C語言合法的整數？",
+    "question_img": null,
+    "①": "101011B",
+    "①_img": null,
+    "②": "5AH",
+    "②_img": null,
+    "③": "0X55",
+    "③_img": null,
+    "④": "058",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第十題": {
+    "題目": "已知二維陣列a[2][4]={1,2,3,4,5,6,7,8,}，則a[1][2]之值為何？",
+    "question_img": null,
+    "①": "5",
+    "①_img": null,
+    "②": "6",
+    "②_img": null,
+    "③": "7",
+    "③_img": null,
+    "④": "8",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第十一題": {
+    "題目": "執行下列C語言程式，其中do…while迴圈會執行幾次？",
+    "question_img": "images/item08_Q011_title.png",
+    "①": "3",
+    "①_img": null,
+    "②": "4",
+    "②_img": null,
+    "③": "5",
+    "③_img": null,
+    "④": "6",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第十二題": {
+    "題目": "不論判斷條件是否成立，至少會執行一次的迴圈為",
+    "question_img": null,
+    "①": "while迴圈",
+    "①_img": null,
+    "②": "do…while迴圈",
+    "②_img": null,
+    "③": "for迴圈",
+    "③_img": null,
+    "④": "巢狀while迴圈",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第十三題": {
+    "題目": "執行運算式a=5*3＞4*3後，a之值為何？",
+    "question_img": null,
+    "①": "0",
+    "①_img": null,
+    "②": "1",
+    "②_img": null,
+    "③": "15",
+    "③_img": null,
+    "④": "12",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第十四題": {
+    "題目": "下列C語言程式中，for迴圈的執行次數，何者正確？",
+    "question_img": "images/item08_Q014_title.png",
+    "①": "是無窮迴圈",
+    "①_img": null,
+    "②": "執行5次",
+    "②_img": null,
+    "③": "執行4次",
+    "③_img": null,
+    "④": "執行3次",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第十五題": {
+    "題目": "執行下列C語言程式，其輸出結果為何？",
+    "question_img": "images/item08_Q015_title.png",
+    "①": "a",
+    "①_img": null,
+    "②": "b",
+    "②_img": null,
+    "③": "bc",
+    "③_img": null,
+    "④": "bcd",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第十六題": {
+    "題目": "執行下列for巢狀迴圈的程式，其中printf(\"\\n\")共執行幾次？",
+    "question_img": "images/item08_Q016_title.png",
+    "①": "12次",
+    "①_img": null,
+    "②": "9次",
+    "②_img": null,
+    "③": "4次",
+    "③_img": null,
+    "④": "3次",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第十七題": {
+    "題目": "執行下列C語言程式，其輸出結果為何？",
+    "question_img": "images/item08_Q017_title.png",
+    "①": "x=16,y=7",
+    "①_img": null,
+    "②": "x=17,y=7",
+    "②_img": null,
+    "③": "x=12,y=7",
+    "③_img": null,
+    "④": "x=11,y=7",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第十八題": {
+    "題目": "執行下列C語言程式，其輸出結果為何？",
+    "question_img": "images/item08_Q018_title.png",
+    "①": "b=0",
+    "①_img": null,
+    "②": "b=3",
+    "②_img": null,
+    "③": "b=4",
+    "③_img": null,
+    "④": "b=5",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第十九題": {
+    "題目": "x為大於1的奇數，下列判斷式何者正確？",
+    "question_img": null,
+    "①": "x％2==1",
+    "①_img": null,
+    "②": "x％2==0",
+    "②_img": null,
+    "③": "x/2==1",
+    "③_img": null,
+    "④": "x/2==0",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第二十題": {
+    "題目": "當變數w,x,y,z分別宣告為char w;int x;float y;double z;則表示式w*x/y-z的執行結果，其資料型態為",
+    "question_img": null,
+    "①": "char",
+    "①_img": null,
+    "②": "int",
+    "②_img": null,
+    "③": "float",
+    "③_img": null,
+    "④": "double",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第二十一題": {
+    "題目": "執行下列C語言程式，其輸出結果為",
+    "question_img": "images/item08_Q021_title.png",
+    "①": "a=10, b=20",
+    "①_img": null,
+    "②": "a=20, b=10",
+    "②_img": null,
+    "③": "a=10, b=10",
+    "③_img": null,
+    "④": "a=20, b=20",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第二十二題": {
+    "題目": "執行下列C語言程式，其輸出結果為",
+    "question_img": "images/item08_Q022_title.png",
+    "①": "10",
+    "①_img": null,
+    "②": "11",
+    "②_img": null,
+    "③": "12",
+    "③_img": null,
+    "④": "13",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第二十三題": {
+    "題目": "一次只能讀取、翻譯，並執行一列程式敘述的程式為何？",
+    "question_img": null,
+    "①": "鏈結器（Linker）",
+    "①_img": null,
+    "②": "編譯器（Compiler）",
+    "②_img": null,
+    "③": "直譯器（Interpreter）",
+    "③_img": null,
+    "④": "組譯器（Assembler）",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第二十四題": {
+    "題目": "執行下列C語言程式，其輸出結果為",
+    "question_img": "images/item08_Q024_title.png",
+    "①": "ab",
+    "①_img": null,
+    "②": "abc",
+    "②_img": null,
+    "③": "abcd",
+    "③_img": null,
+    "④": "abcdef",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第二十五題": {
+    "題目": "一個字元佔用記憶體一個位元組（byte），字串“my_name”佔用記憶體幾個位元組？",
+    "question_img": null,
+    "①": "7",
+    "①_img": null,
+    "②": "8",
+    "②_img": null,
+    "③": "9",
+    "③_img": null,
+    "④": "10",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第二十六題": {
+    "題目": "程式設計中，採\"Call by value\"的參數傳遞方式，下列何者正確？",
+    "question_img": null,
+    "①": "將參數的資料型態，傳送給被呼叫的函數",
+    "①_img": null,
+    "②": "將參數的位址，傳送給被呼叫的函數",
+    "②_img": null,
+    "③": "將參數的值，傳送給被呼叫的函數",
+    "③_img": null,
+    "④": "將參數的名稱，傳送給被呼叫的函數",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第二十七題": {
+    "題目": "在C語言中，執行printf(\"％d\", 10＞5)的輸出結果為",
+    "question_img": null,
+    "①": "1",
+    "①_img": null,
+    "②": "10",
+    "②_img": null,
+    "③": "5",
+    "③_img": null,
+    "④": "0",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第二十八題": {
+    "題目": "下列迴圈k的初值為10，終值2，增值為-2，下列何者正確？",
+    "question_img": null,
+    "①": "for(k=10;k＜=2;k-=2)",
+    "①_img": null,
+    "②": "for(k=10;k＜=2;k-2)",
+    "②_img": null,
+    "③": "for(k=10;k＜=2;k=--k)",
+    "③_img": null,
+    "④": "for(k=10;k＜=2;k=-2)",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第二十九題": {
+    "題目": "執行下列C語言程式，其輸出結果為",
+    "question_img": "images/item08_Q029_title.png",
+    "①": "i=2,sum=3",
+    "①_img": null,
+    "②": "i=3,sum=6",
+    "②_img": null,
+    "③": "i=10,sum=45",
+    "③_img": null,
+    "④": "i=11,sum=55",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第三十題": {
+    "題目": "表示條件：10＜x＜100或x＜0的C語言表達式，下列何者正確？",
+    "question_img": null,
+    "①": "x＞10&&x＜100||x＜0",
+    "①_img": null,
+    "②": "10＜x＜100||x＜0",
+    "②_img": null,
+    "③": "10＜x,x＜100||x＜0",
+    "③_img": null,
+    "④": "x＞10||x＜100||x＜0",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第三十一題": {
+    "題目": "執行下列C語言程式，其輸出結果為",
+    "question_img": "images/item08_Q031_title.png",
+    "①": "x=c,y=183",
+    "①_img": null,
+    "②": "x=12,y=183",
+    "②_img": null,
+    "③": "x=c,y=b7",
+    "③_img": null,
+    "④": "x=c,y=267",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第三十二題": {
+    "題目": "為達到模組化程式的設計目標，使用下列何種變數較佳？",
+    "question_img": null,
+    "①": "全域變數",
+    "①_img": null,
+    "②": "區域變數",
+    "②_img": null,
+    "③": "外部變數",
+    "③_img": null,
+    "④": "字串變數",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第三十三題": {
+    "題目": "要得到介於1～6的亂數值，並置於已宣告過的整數變數x內。下列何者正確？",
+    "question_img": null,
+    "①": "x=rand()％6;",
+    "①_img": null,
+    "②": "x=rand()％6+1;",
+    "②_img": null,
+    "③": "x=rand()％7;",
+    "③_img": null,
+    "④": "x=rand()％7+1;",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第三十四題": {
+    "題目": "變數x,z為unsigned char x=0b01100010;於C語言中，執行z=x＜＜2;則變數z內的值為",
+    "question_img": null,
+    "①": "0b11000100",
+    "①_img": null,
+    "②": "0b10001000",
+    "②_img": null,
+    "③": "0b00011000",
+    "③_img": null,
+    "④": "0b00110001",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第三十五題": {
+    "題目": "執行下列C語言程式，其輸出為何？",
+    "question_img": "images/item08_Q035_title.png",
+    "①": "12340",
+    "①_img": null,
+    "②": "11140",
+    "②_img": null,
+    "③": "11110",
+    "③_img": null,
+    "④": "11111",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第三十六題": {
+    "題目": "執行下列C語言程式，其輸出為何？",
+    "question_img": "images/item08_Q036_title.png",
+    "①": "a=123,b=3,c=30",
+    "①_img": null,
+    "②": "a=123,b=3,c=1",
+    "②_img": null,
+    "③": "a=123,b=30,c=3",
+    "③_img": null,
+    "④": "a=123,b=123,c=30",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第三十七題": {
+    "題目": "變數宣告為int a=3,b=4,c=5;則表示式『!(a+b)+c-1 && b+c/2』的值為",
+    "question_img": null,
+    "①": "0",
+    "①_img": null,
+    "②": "1",
+    "②_img": null,
+    "③": "2",
+    "③_img": null,
+    "④": "6",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第三十八題": {
+    "題目": "GCC全名是",
+    "question_img": null,
+    "①": "GNU Compiler Collection",
+    "①_img": null,
+    "②": "GNU C Compiler",
+    "②_img": null,
+    "③": "Green C Compiler",
+    "③_img": null,
+    "④": "Good C Compiler",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第三十九題": {
+    "題目": "gcc是何種程式語言的編譯器？",
+    "question_img": null,
+    "①": "C",
+    "①_img": null,
+    "②": "C++",
+    "②_img": null,
+    "③": "GO",
+    "③_img": null,
+    "④": "Java",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第四十題": {
+    "題目": "C語言程式執行時，主程式於呼叫函數時，暫存返回資料的記憶體稱為",
+    "question_img": null,
+    "①": "data",
+    "①_img": null,
+    "②": "heap",
+    "②_img": null,
+    "③": "code",
+    "③_img": null,
+    "④": "stack",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第四十一題": {
+    "題目": "標準C語言程式中，使用malloc()取得的記憶體空間會在哪一個記憶體區段？",
+    "question_img": null,
+    "①": "data segment",
+    "①_img": null,
+    "②": "heap segment",
+    "②_img": null,
+    "③": "code segment",
+    "③_img": null,
+    "④": "stack segment",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第四十二題": {
+    "題目": "gcc編譯器的執行程序依序為",
+    "question_img": null,
+    "①": "preprocessing, compiling, assembling, linking",
+    "①_img": null,
+    "②": "compiling, preprocessing, assembling, linking",
+    "②_img": null,
+    "③": "compiling, assembling, preprocessing, linking",
+    "③_img": null,
+    "④": "preprocessing, compiling, linking, assembling",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第四十三題": {
+    "題目": "將C語言程式中的Port以P1取代，是在哪一個編譯過程？",
+    "question_img": "images/item08_Q043_title.png",
+    "①": "Assembling",
+    "①_img": null,
+    "②": "Compiling",
+    "②_img": null,
+    "③": "Linking",
+    "③_img": null,
+    "④": "Preprocessing",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第四十四題": {
+    "題目": "在C語言程式的編譯過程中，哪一過程是將組合語言轉換為CPU可讀取並解析的目標碼（object code）？",
+    "question_img": null,
+    "①": "Assembler",
+    "①_img": null,
+    "②": "Compiler",
+    "②_img": null,
+    "③": "Linker",
+    "③_img": null,
+    "④": "Preprocessor",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第四十五題": {
+    "題目": "下列何者為標準C語言中，宣告整數變數並給予初值5之指令？",
+    "question_img": null,
+    "①": "int num = 5;",
+    "①_img": null,
+    "②": "val num = 5;",
+    "②_img": null,
+    "③": "num = 5;",
+    "③_img": null,
+    "④": "num = 5 int;",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第四十六題": {
+    "題目": "下列何者為標準C語言中，宣告浮點數變數並給予初值2.8之指令？",
+    "question_img": null,
+    "①": "val num = 2.8;",
+    "①_img": null,
+    "②": "float num = 2.8;",
+    "②_img": null,
+    "③": "num = 2.8 double;",
+    "③_img": null,
+    "④": "num = 2.8 float;",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第四十七題": {
+    "題目": "下列何者為標準C語言中，輸出格式化字串的函數？",
+    "question_img": null,
+    "①": "print()",
+    "①_img": null,
+    "②": "printf()",
+    "②_img": null,
+    "③": "write()",
+    "③_img": null,
+    "④": "output()",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第四十八題": {
+    "題目": "下列何者為標準C語言中，輸出格式化的字串函數中，指定轉換整數之符號？",
+    "question_img": null,
+    "①": "％d",
+    "①_img": null,
+    "②": "％s",
+    "②_img": null,
+    "③": "％x",
+    "③_img": null,
+    "④": "％f",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第四十九題": {
+    "題目": "下列何者為標準C語言中，可以用來取得資料型態或變數所占用的位元數？",
+    "question_img": null,
+    "①": "size()",
+    "①_img": null,
+    "②": "sizeof()",
+    "②_img": null,
+    "③": "typeof()",
+    "③_img": null,
+    "④": "len()",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第五十題": {
+    "題目": "下列何者為標準C語言中，用來指定變數為不可改變或唯讀變數？",
+    "question_img": null,
+    "①": "final",
+    "①_img": null,
+    "②": "readonly",
+    "②_img": null,
+    "③": "constant",
+    "③_img": null,
+    "④": "const",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第五十一題": {
+    "題目": "下列何者為標準C語言指令int myNumbers[] = {25, 50, 75, 100};的作用？",
+    "question_img": null,
+    "①": "宣告整數陣列並給予初值設定",
+    "①_img": null,
+    "②": "宣告實數陣列並給予初值設定",
+    "②_img": null,
+    "③": "宣告集合變數並給予初值",
+    "③_img": null,
+    "④": "宣告串列變數並給予初值",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第五十二題": {
+    "題目": "有關標準C語言中之陣列索引（index），下列敘述何者正確？",
+    "question_img": null,
+    "①": "索引從0開始",
+    "①_img": null,
+    "②": "索引從1開始",
+    "②_img": null,
+    "③": "索引起始由使用者設定",
+    "③_img": null,
+    "④": "索引開始於宣告時設定",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第五十三題": {
+    "題目": "下列何者為標準C語言中，停止迴圈執行的指令？",
+    "question_img": null,
+    "①": "return",
+    "①_img": null,
+    "②": "stop",
+    "②_img": null,
+    "③": "break",
+    "③_img": null,
+    "④": "continue",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第五十四題": {
+    "題目": "標準C語言指令int * ptr = &myAge;中，變數ptr為何種資料型態？",
+    "question_img": null,
+    "①": "整數指標",
+    "①_img": null,
+    "②": "整數陣列",
+    "②_img": null,
+    "③": "單精確浮點數",
+    "③_img": null,
+    "④": "雙精確浮點數",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第五十五題": {
+    "題目": "下列何者為標準C語言中，宣告結構的關鍵字？",
+    "question_img": null,
+    "①": "structure",
+    "①_img": null,
+    "②": "structs",
+    "②_img": null,
+    "③": "struct",
+    "③_img": null,
+    "④": "str",
+    "④_img": null,
+    "答案": [
+      3
+    ]
+  },
+  "第五十六題": {
+    "題目": "標準C語言程式中，使用malloc()動態取得記憶體空間後，必須釋放記憶體空間，否則會造成何種問題？",
+    "question_img": null,
+    "①": "memory out of bound",
+    "①_img": null,
+    "②": "memory leak",
+    "②_img": null,
+    "③": "syntax error",
+    "③_img": null,
+    "④": "linker error",
+    "④_img": null,
+    "答案": [
+      2
+    ]
+  },
+  "第五十七題": {
+    "題目": "下列標準C語言指令後加入下列哪一個指令，可將存放於x[]字串陣列中的資料複製到y所指到的記憶體空間？",
+    "question_img": "images/item08_Q057_title.png",
+    "①": "y = x;",
+    "①_img": null,
+    "②": "y = x[];",
+    "②_img": null,
+    "③": "strcmp(x, y);",
+    "③_img": null,
+    "④": "sprintf(y, x);",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第五十八題": {
+    "題目": "執行下列標準C語言程式，輸出為何？",
+    "question_img": "images/item08_Q058_title.png",
+    "①": "True",
+    "①_img": null,
+    "②": "False",
+    "②_img": null,
+    "③": "編譯時會出現錯誤",
+    "③_img": null,
+    "④": "執行時會崩潰（crash）",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第五十九題": {
+    "題目": "執行下列標準C語言程式，輸出為何？",
+    "question_img": "images/item08_Q059_title.png",
+    "①": "NNNN",
+    "①_img": null,
+    "②": "MMMM",
+    "②_img": null,
+    "③": "MLKJ",
+    "③_img": null,
+    "④": "MNOP",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第六十題": {
+    "題目": "執行下列標準C語言程式，輸出為何？",
+    "question_img": "images/item08_Q060_title.png",
+    "①": "20 20",
+    "①_img": null,
+    "②": "20 10",
+    "②_img": null,
+    "③": "10 10",
+    "③_img": null,
+    "④": "10 20",
+    "④_img": null,
+    "答案": [
+      4
+    ]
+  },
+  "第六十一題": {
+    "題目": "執行下列標準C語言程式，輸出為何？",
+    "question_img": "images/item08_Q061_title.png",
+    "①": "1000",
+    "①_img": null,
+    "②": "100",
+    "②_img": null,
+    "③": "532",
+    "③_img": null,
+    "④": "235",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第六十二題": {
+    "題目": "執行下列標準C語言程式，輸出為何？",
+    "question_img": "images/item08_Q062_title.png",
+    "①": "b",
+    "①_img": null,
+    "②": "a",
+    "②_img": null,
+    "③": "10",
+    "③_img": null,
+    "④": "11",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第六十三題": {
+    "題目": "執行下列標準C語言程式，輸出為何？",
+    "question_img": "images/item08_Q063_title.png",
+    "①": "2",
+    "①_img": null,
+    "②": "4",
+    "②_img": null,
+    "③": "1",
+    "③_img": null,
+    "④": "8",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第六十四題": {
+    "題目": "執行下列標準C語言程式，輸出為何？",
+    "question_img": "images/item08_Q064_title.png",
+    "①": "178",
+    "①_img": null,
+    "②": "179",
+    "②_img": null,
+    "③": "77",
+    "③_img": null,
+    "④": "17",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第六十五題": {
+    "題目": "執行下列標準C語言程式，輸出為何？",
+    "question_img": "images/item08_Q065_title.png",
+    "①": "100",
+    "①_img": null,
+    "②": "202",
+    "②_img": null,
+    "③": "146",
+    "③_img": null,
+    "④": "200",
+    "④_img": null,
+    "答案": [
+      1
+    ]
+  },
+  "第六十六題": {
+    "題目": "C語言程式中，x=0x26，y=0xe2，下列敘述何者正確？",
+    "question_img": null,
+    "①": "執行z=x&y後，z=0x22",
+    "①_img": null,
+    "②": "執行z=x|y後，z=0x66",
+    "②_img": null,
+    "③": "執行z=x＜＜3後，z=0x30",
+    "③_img": null,
+    "④": "執行z=y＞＞2後，z=0x38",
+    "④_img": null,
+    "答案": [
+      1,
+      3,
+      4
+    ]
+  },
+  "第六十七題": {
+    "題目": "下列何者是C語言提供的關鍵字（keyword）？",
+    "question_img": null,
+    "①": "break",
+    "①_img": null,
+    "②": "while",
+    "②_img": null,
+    "③": "character",
+    "③_img": null,
+    "④": "integer",
+    "④_img": null,
+    "答案": [
+      1,
+      2
+    ]
+  },
+  "第六十八題": {
+    "題目": "C語言程式中，if(y＜0) x=-y ; else x=y;使用『?:』替換，可寫成",
+    "question_img": null,
+    "①": "x=y＜0?-y:y",
+    "①_img": null,
+    "②": "x=y＜0?y:-y",
+    "②_img": null,
+    "③": "y=y＜0?x:-x",
+    "③_img": null,
+    "④": "x=y＞0?y:-y",
+    "④_img": null,
+    "答案": [
+      1,
+      4
+    ]
+  },
+  "第六十九題": {
+    "題目": "程式執行中，變數的存取範圍（scope）和生命週期（life time），下列何者正確？",
+    "question_img": null,
+    "①": "區域（local）變數：僅能在該變數的宣告函式內存取",
+    "①_img": null,
+    "②": "靜態（static）變數：其生命週期跟程式一樣長，可以在宣告的函式外存取",
+    "②_img": null,
+    "③": "全域（global）變數：整個程式中都可以存取",
+    "③_img": null,
+    "④": "變數是存放位置在stack或heap記憶體中",
+    "④_img": null,
+    "答案": [
+      1,
+      3
+    ]
+  },
+  "第七十題": {
+    "題目": "C語言程式中，已知a=10，b=5，下列何者會造成無窮迴圈？",
+    "question_img": null,
+    "①": "while (a＞b) { a=a-b; b=b-a; printf(\"*\"); }",
+    "①_img": null,
+    "②": "for (a=0; a＜b; a--) printf(\"*\");",
+    "②_img": null,
+    "③": "for (a=0; a＜b; ++a) { printf(\"*\"); }",
+    "③_img": null,
+    "④": "while (a==b) { for (a=0;;) printf(\"*\"); }",
+    "④_img": null,
+    "答案": [
+      1,
+      2
+    ]
+  },
+  "第七十一題": {
+    "題目": "下列C語言程式，何者正確？",
+    "question_img": "images/item08_Q071_title.png",
+    "①": "執行至第10列後，其輸出為：a=100,b=10",
+    "①_img": null,
+    "②": "執行至第10列，其輸出為：a=50,b=10",
+    "②_img": null,
+    "③": "執行至第12列，其輸出為：a=350,b=360",
+    "③_img": null,
+    "④": "執行至第12列，其輸出為：a=100,b=360",
+    "④_img": null,
+    "答案": [
+      1,
+      4
+    ]
+  },
+  "第七十二題": {
+    "題目": "若變數a,b皆為整數，且a和b的值皆為0，則下列運算結果何者為true？",
+    "question_img": null,
+    "①": "a=b",
+    "①_img": null,
+    "②": "a==b",
+    "②_img": null,
+    "③": "a!=b",
+    "③_img": null,
+    "④": "a＜=b",
+    "④_img": null,
+    "答案": [
+      2,
+      4
+    ]
+  },
+  "第七十三題": {
+    "題目": "char、short int分別佔用記憶體為1個及2個位元組（byte），變數a,b,c,d分別宣告為char a; unsigned char b; short int c; unsigned short int d;下列何者正確？",
+    "question_img": null,
+    "①": "執行a=28+100;結果a=128",
+    "①_img": null,
+    "②": "執行b=28+100;結果b=128",
+    "②_img": null,
+    "③": "執行c=30000+2768;結果c=32768",
+    "③_img": null,
+    "④": "執行d=30000+2768;結果d=32768",
+    "④_img": null,
+    "答案": [
+      2,
+      4
+    ]
+  },
+  "第七十四題": {
+    "題目": "已知ASCII Code a=97, A=65，若下列程式執行結果為King或KING，程式中之n[4]陣列初值要如何設定？",
+    "question_img": "images/item08_Q074_title.png",
+    "①": "{30, 5, -7}",
+    "①_img": null,
+    "②": "{-2, 5, -7}",
+    "②_img": null,
+    "③": "{32, 5, -7}",
+    "③_img": null,
+    "④": "{22, 5, -7}",
+    "④_img": null,
+    "答案": [
+      1,
+      2
+    ]
+  },
+  "第七十五題": {
+    "題目": "有關標準C語言中，union執行下列程式後，請選出正確結果",
+    "question_img": "images/item08_Q075_title.png",
+    "①": "a[0] = 0x64",
+    "①_img": null,
+    "②": "sizeof(A1) = 8",
+    "②_img": null,
+    "③": "A1.a = 10",
+    "③_img": null,
+    "④": "sizeof(A1) = 12",
+    "④_img": null,
+    "答案": [
+      1,
+      2
+    ]
+  },
+  "第七十六題": {
+    "題目": "有關標準C語言中，結構（struct）定義的記憶體安排，下列程式中，sizeof(A)與sizeof(B)分別為",
+    "question_img": "images/item08_Q076_title.png",
+    "①": "sizeof(A)=24",
+    "①_img": null,
+    "②": "sizeof(B)=16",
+    "②_img": null,
+    "③": "sizeof(A)=14",
+    "③_img": null,
+    "④": "sizeof(B)=14",
+    "④_img": null,
+    "答案": [
+      1,
+      2
+    ]
+  },
+  "第七十七題": {
+    "題目": "C語言程式中，執行時的靜態記憶體（Static Memory）區段有",
+    "question_img": null,
+    "①": "code(text)",
+    "①_img": null,
+    "②": "data/bss",
+    "②_img": null,
+    "③": "stack",
+    "③_img": null,
+    "④": "heap",
+    "④_img": null,
+    "答案": [
+      1,
+      2
+    ]
+  },
+  "第七十八題": {
+    "題目": "相較標準C編譯器，有關SDCC（Small Device C Compiler）編譯器的說明，下列何者正確？",
+    "question_img": null,
+    "①": "結構（struct）不可以作為函數傳入參數",
+    "①_img": null,
+    "②": "不支援可變長度陣列（variable-length arrays）",
+    "②_img": null,
+    "③": "支援雙精確浮點數",
+    "③_img": null,
+    "④": "結構（struct）可以作為函數回傳值",
+    "④_img": null,
+    "答案": [
+      1,
+      2
+    ]
+  },
+  "第七十九題": {
+    "題目": "相較於標準C語言，有關Embedded C新增定義的功能，下列何者正確？",
+    "question_img": null,
+    "①": "定點數學運算（fixed-point arithmetic）",
+    "①_img": null,
+    "②": "地址空間命名（named address spaces）",
+    "②_img": null,
+    "③": "物件導向（object-oriented）",
+    "③_img": null,
+    "④": "巢狀結構體（nested-structure）",
+    "④_img": null,
+    "答案": [
+      1,
+      2
+    ]
+  },
+  "第八十題": {
+    "題目": "C語言程式中，a=13，b=6，num=0，下列敘述何者正確？",
+    "question_img": null,
+    "①": "執行num=(++a)+(++b)後，num=21、a=14、b=7",
+    "①_img": null,
+    "②": "執行num=(a++)+(b++)後，num=21、a=14、b=7",
+    "②_img": null,
+    "③": "執行a+=a+(b++)後，num=0、a=32、b=7",
+    "③_img": null,
+    "④": "執行a*=b--後，num=0、a=65、b=5",
+    "④_img": null,
+    "答案": [
+      1,
+      3
+    ]
+  },
+  "第八十一題": {
+    "題目": "C語言程式中的for、while及do…while三種迴圈，下列敘述何者正確？",
+    "question_img": null,
+    "①": "for迴圈是前端測試判斷條件",
+    "①_img": null,
+    "②": "while迴圈是後端測試判斷條件",
+    "②_img": null,
+    "③": "do…while迴圈至少執行迴圈主體1次",
+    "③_img": null,
+    "④": "do…while迴圈是在測試判斷條件不成立時，執行迴圈主體",
+    "④_img": null,
+    "答案": [
+      1,
+      3
+    ]
+  }
+}
