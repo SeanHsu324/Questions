@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>工業電子丙級 - 刷題網</title>
+    <title>工業電子丙級・數位電子乙級刷題網</title>
     
     <script>
         window.MathJax = {
@@ -489,6 +489,53 @@
             font-size: 1.5rem;
             z-index: 300;
         }
+
+        .radio-set { flex-wrap: wrap; }
+        .question-type-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            margin: 0 0 12px;
+            font-size: .82rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(78, 67, 118, .10);
+            border: 1px solid rgba(78, 67, 118, .22);
+        }
+        .question-meta { color: #777; font-size: .85rem; margin: 0 0 8px; }
+        .option-label-row { display:flex; gap:10px; align-items:flex-start; }
+        .selection-mark { color: var(--primary); font-size: 1.15rem; line-height: 1.3; flex:0 0 1.3em; }
+        .answer-reveal {
+            display: inline-block;
+            padding: 7px 11px;
+            margin-top: 14px;
+            color: var(--correct-text);
+            background: var(--correct-bg);
+            border-radius: 6px;
+            font-weight: 700;
+        }
+        .reading-toolbar { display:flex; gap:10px; align-items:center; margin-bottom:18px; }
+        .reading-question { margin-bottom:18px; }
+        .reading-question .quiz-card { margin-bottom:0; padding:22px; }
+        .reading-question .options-list { gap:8px; }
+        .reading-question .option-item { cursor:default; padding:11px 15px; }
+        .reading-question .option-item:hover { border-color:var(--border); background-color:var(--option-bg); }
+        .exam-rule-note {
+            padding: 12px 14px;
+            border-radius: 8px;
+            background: rgba(43, 88, 118, .08);
+            border-left: 4px solid var(--primary);
+            line-height: 1.65;
+            font-size: .92rem;
+        }
+        .level-note { color:#777; font-size:.85rem; line-height:1.5; margin-top:8px; }
+        @media (max-width: 560px) {
+            .radio-set { gap:7px; }
+            .radio-btn { padding:10px 7px; font-size:.9rem; }
+            .reading-question .quiz-card { padding:17px; }
+        }
+
     </style>
 </head>
 <body>
@@ -542,689 +589,494 @@
     </style>
 
     <script>
-        // ==================== 全局資料狀態 ====================
-        const JSON_FILES = {
-            "item01": "工作項目02_電子電機識圖.json",
-            "item02": "工作項目03_手工具及量具知識.json",
-            "item03": "工作項目04_零組件知識.json",
-            "item04": "工作項目05_裝配知識.json",
-            "item05": "工作項目06_電子儀表使用知識.json",
-            "item06": "工作項目07_測試知識.json",
-            "item07": "工作項目08_電工學.json",
-            "item08": "工作項目09_電子學.json",
-            "item09": "工作項目10_數位系統.json",
-            "common01": "共同項目01_工作倫理.json",
-            "common02": "共同項目02_節能減碳.json",
-            "common03": "共同項目03_環境保護.json",
-            "common04": "共同項目04_職業安全.json"
-        };
+// 題庫定義：丙級為原工業電子題庫；ZIP 內乙級題庫為數位電子乙級（11700）。
+const LEVELS = {
+    C: {
+        name: '丙級｜工業電子',
+        examTitle: '🏆 工業電子丙級模擬學科測驗',
+        imageFolder: 'images/',
+        banks: [
+            {key:'item01', file:'工作項目02_電子電機識圖.json', title:'工作項目 02 - 電子電機識圖'},
+            {key:'item02', file:'工作項目03_手工具及量具知識.json', title:'工作項目 03 - 手工具及量具知識'},
+            {key:'item03', file:'工作項目04_零組件知識.json', title:'工作項目 04 - 零組件知識'},
+            {key:'item04', file:'工作項目05_裝配知識.json', title:'工作項目 05 - 裝配知識'},
+            {key:'item05', file:'工作項目06_電子儀表使用知識.json', title:'工作項目 06 - 電子儀表使用知識'},
+            {key:'item06', file:'工作項目07_測試知識.json', title:'工作項目 07 - 測試知識'},
+            {key:'item07', file:'工作項目08_電工學.json', title:'工作項目 08 - 電工學'},
+            {key:'item08', file:'工作項目09_電子學.json', title:'工作項目 09 - 電子學'},
+            {key:'item09', file:'工作項目10_數位系統.json', title:'工作項目 10 - 數位系統'}
+        ]
+    },
+    B: {
+        name: '乙級｜數位電子',
+        examTitle: '🏆 數位電子乙級模擬學科測驗',
+        imageFolder: 'images_2/',
+        banks: [
+            {key:'b_item01', file:'乙級_工作項目01_電機電子識圖.json', title:'工作項目 01 - 電機電子識圖'},
+            {key:'b_item02', file:'乙級_工作項目02_零組件.json', title:'工作項目 02 - 零組件'},
+            {key:'b_item03', file:'乙級_工作項目03_儀表與檢修測試.json', title:'工作項目 03 - 儀表與檢修測試'},
+            {key:'b_item04', file:'乙級_工作項目04_電子工作法.json', title:'工作項目 04 - 電子工作法'},
+            {key:'b_item05', file:'乙級_工作項目05_電子學與電子電路.json', title:'工作項目 05 - 電子學與電子電路'},
+            {key:'b_item06', file:'乙級_工作項目06_數位邏輯設計.json', title:'工作項目 06 - 數位邏輯設計'},
+            {key:'b_item07', file:'乙級_工作項目07_電腦與周邊設備.json', title:'工作項目 07 - 電腦與周邊設備'},
+            {key:'b_item08', file:'乙級_工作項目08_程式語言.json', title:'工作項目 08 - 程式語言'},
+            {key:'b_item09', file:'乙級_工作項目09_網路技術與應用.json', title:'工作項目 09 - 網路技術與應用'},
+            {key:'b_item10', file:'乙級_工作項目10_微控制器系統.json', title:'工作項目 10 - 微控制器系統'}
+        ]
+    }
+};
+const COMMON_BANKS = [
+    {key:'common01', file:'共同項目01_工作倫理.json', title:'共同項目 01 - 工作倫理'},
+    {key:'common02', file:'共同項目02_節能減碳.json', title:'共同項目 02 - 節能減碳'},
+    {key:'common03', file:'共同項目03_環境保護.json', title:'共同項目 03 - 環境保護'},
+    {key:'common04', file:'共同項目04_職業安全.json', title:'共同項目 04 - 職業安全'}
+];
+const ALL_BANKS = [...LEVELS.C.banks, ...LEVELS.B.banks, ...COMMON_BANKS];
+const BANK_BY_KEY = Object.fromEntries(ALL_BANKS.map(b => [b.key, b]));
+const JSON_FILES = Object.fromEntries(ALL_BANKS.map(b => [b.key, b.file]));
+let dbCache = {};
+let currentExam = {
+    level:'C', mode:'sequence', bankKey:'item01', feedbackMode:'A', questions:[],
+    currentIndex:0, userAnswers:{}, confirmed:{}, timerId:null, timeSpent:0, timeLeft:6000
+};
+let currentReport = null;
 
-        let dbCache = {}; 
-        let currentExam = {
-            mode: 'sequence', 
-            bankKey: 'item01',
-            feedbackMode: 'A', 
-            customCount: 40,
-            questions: [],     
-            currentIndex: 0,
-            userAnswers: {},   
-            confirmed: {},     
-            timerId: null,
-            timeSpent: 0,      
-            timeLeft: 6000     
-        };
-
-        function cnToAn(cnStr) {
-            const cnDict = {'零':0, '一':1, '二':2, '三':3, '四':4, '五':5, '六':6, '七':7, '八':8, '九':9, '十':10, '百':100, '千':1000};
-            let cn = cnStr.replace('第', '').replace('題', '').trim();
-            if (!isNaN(cn)) return parseInt(cn);
-            let ans = 0, unit = 0;
-            for (let i = 0; i < cn.length; i++) {
-                let val = cnDict[cn[i]] || 0;
-                if (val >= 10) {
-                    if (val > unit) { unit = val; ans = ans === 0 ? val : ans * val; }
-                    else { unit = val; ans += val; }
-                } else {
-                    if (i + 1 < cn.length && cnDict[cn[i+1]] >= 10) ans += val * cnDict[cn[i+1]];
-                    else ans += val;
-                }
-            }
-            if (cn.startsWith('十')) ans += 10;
-            return ans;
+function cnToAn(cnStr) {
+    const cnDict = {'零':0,'一':1,'二':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9,'十':10,'百':100,'千':1000};
+    let cn = String(cnStr).replace('第','').replace('題','').trim();
+    if (!isNaN(cn)) return parseInt(cn, 10);
+    let total = 0, digit = 0;
+    for (const char of cn) {
+        const value = cnDict[char] || 0;
+        if (value >= 10) {
+            total += (digit || 1) * value;
+            digit = 0;
+        } else {
+            digit = value;
         }
+    }
+    return total + digit;
+}
+function parseAnswer(answer) {
+    if (Array.isArray(answer)) return [...new Set(answer.map(Number).filter(n => n>=1 && n<=4))].sort();
+    const matches = String(answer ?? '').match(/[1-4]/g) || [];
+    return [...new Set(matches.map(Number))].sort();
+}
+function isMulti(q) { return (q.answerSet || parseAnswer(q.答案)).length > 1; }
+function formatAnswer(answerSet) {
+    const circled = ['','①','②','③','④'];
+    return (answerSet || []).map(n => circled[n] || String(n)).join('、') || '未作答';
+}
+function sameAnswer(a, b) {
+    const left = [...(a||[])].map(Number).sort();
+    const right = [...(b||[])].map(Number).sort();
+    return left.length === right.length && left.every((v,i) => v === right[i]);
+}
+function currentLevel() { return localStorage.getItem('level') === 'B' ? 'B' : 'C'; }
+function bankDefs(level=currentLevel()) { return [...LEVELS[level].banks, ...COMMON_BANKS]; }
+function bankTitle(key) { return BANK_BY_KEY[key]?.title || key; }
+function ensureValidBank() {
+    const level=currentLevel();
+    const valid=new Set(bankDefs(level).map(b=>b.key));
+    if (!valid.has(localStorage.getItem('bankKey'))) {
+        localStorage.setItem('bankKey', LEVELS[level].banks[0].key);
+    }
+}
 
-        // ==================== 初始化 ====================
-        window.addEventListener('DOMContentLoaded', () => {
-            initTheme();
-            renderLocalStorageSettings();
-            renderHome();
-            preloadAllJson(); 
-            bindGlobalKeydown();
+window.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    renderLocalStorageSettings();
+    ensureValidBank();
+    renderHome();
+    preloadAllJson();
+    bindGlobalKeydown();
+});
+function initTheme() {
+    const saved=localStorage.getItem('theme')||'light';
+    if(saved==='dark') document.body.classList.add('dark-mode');
+    document.getElementById('theme-btn').innerText=saved==='dark'?'☀️ 白天模式':'🌙 夜間模式';
+}
+function toggleTheme() {
+    const dark=document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme',dark?'dark':'light');
+    document.getElementById('theme-btn').innerText=dark?'☀️ 白天模式':'🌙 夜間模式';
+}
+function renderLocalStorageSettings() {
+    if(!localStorage.getItem('level')) localStorage.setItem('level','C');
+    if(!localStorage.getItem('mode')) localStorage.setItem('mode','sequence');
+    if(!localStorage.getItem('bankKey')) localStorage.setItem('bankKey','item01');
+    if(!localStorage.getItem('feedbackMode')) localStorage.setItem('feedbackMode','A');
+    if(!localStorage.getItem('customEnabled')) localStorage.setItem('customEnabled','true');
+    if(!localStorage.getItem('customCount')) localStorage.setItem('customCount','40');
+}
+async function preloadAllJson() {
+    await Promise.all(ALL_BANKS.map(async bank => {
+        if(dbCache[bank.key]) return;
+        try {
+            const response=await fetch(bank.file);
+            if(!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+            dbCache[bank.key]=await response.json();
+        } catch(error) { console.warn(`預載失敗：${bank.file}`,error); }
+    }));
+    if(!currentExam.questions.length) renderHome();
+}
+function renderHome() {
+    if(currentExam.timerId) clearInterval(currentExam.timerId);
+    document.body.classList.remove('has-control-bar');
+    ensureValidBank();
+    const level=currentLevel();
+    const mode=localStorage.getItem('mode')||'sequence';
+    const bankKey=localStorage.getItem('bankKey');
+    const feedbackMode=localStorage.getItem('feedbackMode')||'A';
+    const customCount=localStorage.getItem('customCount')||'40';
+    const customEnabled=localStorage.getItem('customEnabled')!=='false';
+    const isExam=mode==='exam';
+    const isReading=mode==='reading';
+    document.getElementById('header-title').innerText='電子科丙/乙級刷題網站';
+    const options=bankDefs(level).map(bank => {
+        const count=dbCache[bank.key]?Object.keys(dbCache[bank.key]).length:null;
+        return `<option value="${bank.key}" ${bankKey===bank.key?'selected':''}>${bank.title}${count===null?'':`（${count}題）`}</option>`;
+    }).join('');
+    const modeLabel=isExam?'3. 答案回饋模式（模擬考固定交卷後評分）':isReading?'閱讀模式直接顯示正確答案':'4. 選擇答案回饋模式';
+    let ruleNote='';
+    if(isExam && level==='B') {
+        ruleNote='<div class="exam-rule-note"><strong>乙級正式題型配置：</strong>80 題、100 分鐘；單選 60 題（每題 1 分）＋複選 20 題（每題 2 分），滿分 100 分。四個共同項目各抽 4 題（共 16 題、16 分）；專業題庫抽單選 44 題、複選 20 題。複選須全選正確才得分。</div>';
+    } else if(isExam) {
+        ruleNote='<div class="exam-rule-note"><strong>丙級模擬考：</strong>80 題、100 分鐘；共同科目四項各抽 4 題，其餘由工業電子丙級題庫抽取。</div>';
+    }
+    const html=`
+        <div class="setup-card">
+            <div class="setup-group">
+                <label>1. 選擇技術士級別</label>
+                <div class="radio-set">
+                    <div class="radio-btn ${level==='C'?'active':''}" onclick="setLevel('C')">丙級｜工業電子</div>
+                    <div class="radio-btn ${level==='B'?'active':''}" onclick="setLevel('B')">乙級｜數位電子（11700）</div>
+                </div>
+            </div>
+            <div class="setup-group">
+                <label>2. 選擇測驗模式</label>
+                <div class="radio-set">
+                    <div class="radio-btn ${mode==='sequence'?'active':''}" onclick="setParam('mode','sequence')">循序練習</div>
+                    <div class="radio-btn ${mode==='random'?'active':''}" onclick="setParam('mode','random')">隨機出題</div>
+                    <div class="radio-btn ${mode==='exam'?'active':''}" onclick="setParam('mode','exam')">模擬正式測驗</div>
+                    <div class="radio-btn ${isReading?'active':''}" onclick="setParam('mode','reading')">📖 直接閱讀</div>
+                </div>
+            </div>
+            <div class="setup-group">
+                <label>3. 選擇題庫範圍</label>
+                <select id="bank-select" onchange="setParam('bankKey',this.value)" ${isExam?'disabled':''}>${options}</select>
+            </div>
+            ${ruleNote?`<div class="setup-group">${ruleNote}</div>`:''}
+            ${(!isExam&&!isReading)?`
+            <div class="setup-group" id="count-group">
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;">
+                    4. 自訂練習題數
+                    <span class="toggle-switch ${customEnabled?'on':''}" onclick="toggleCustomCount()" title="${customEnabled?'已啟用自訂題數':'使用全部題目'}"><span class="toggle-knob"></span></span>
+                    <span style="font-size:.8rem;font-weight:normal;color:${customEnabled?'var(--primary)':'#aaa'};">${customEnabled?'已啟用':'全部題目'}</span>
+                </label>
+                <input type="number" value="${customCount}" min="1" max="200" onchange="setParam('customCount',this.value)" ${customEnabled?'':'disabled'}>
+            </div>`:''}
+            ${!isReading?`
+            <div class="setup-group">
+                <label>${isExam?'4. 答案回饋模式（模擬考固定交卷後評分）':'5. 選擇答案回饋模式'}</label>
+                <div class="radio-set">
+                    <div class="radio-btn ${isExam?'disabled':feedbackMode==='A'?'active':''}" onclick="setParam('feedbackMode','A')">模式 A（寫完再對）</div>
+                    <div class="radio-btn ${isExam?'disabled':feedbackMode==='B'?'active':''}" onclick="setParam('feedbackMode','B')">模式 B（即時翻牌）</div>
+                </div>
+            </div>`:''}
+            <button class="start-btn" onclick="buildExamAction()">${isReading?'📖 開始閱讀題庫':isExam?'🚀 開始正式比例模擬考':'🚀 開始練習'}</button>
+        </div>`;
+    document.getElementById('app-container').innerHTML=html;
+}
+function setLevel(level) {
+    localStorage.setItem('level',level);
+    localStorage.setItem('bankKey',LEVELS[level].banks[0].key);
+    renderHome();
+}
+function setParam(key,value) {
+    localStorage.setItem(key,value);
+    if(key==='level') ensureValidBank();
+    renderHome();
+}
+function toggleCustomCount() {
+    localStorage.setItem('customEnabled',(localStorage.getItem('customEnabled')==='false').toString());
+    renderHome();
+}
+async function ensureBanksLoaded(keys) {
+    for(const key of keys) {
+        if(dbCache[key]) continue;
+        const file=JSON_FILES[key];
+        try {
+            const response=await fetch(file);
+            if(!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+            dbCache[key]=await response.json();
+        } catch(error) {
+            alert(`載入題庫失敗：${file}\n${error.message}`);
+            throw error;
+        }
+    }
+}
+function imagePath(path,level) {
+    if(!path) return null;
+    let normalized=String(path).replace(/^\.\//,'');
+    if(level==='B' && normalized.startsWith('images/')) normalized='images_2/'+normalized.slice('images/'.length);
+    return normalized;
+}
+function flattenBank(jsonObj,bankKey,level) {
+    const bank=BANK_BY_KEY[bankKey];
+    return Object.entries(jsonObj||{}).map(([origKey,source])=>{
+        const answerSet=parseAnswer(source['答案']);
+        return {
+            origKey, bankKey, bankLabel:bank?.title||bankKey, level,
+            題目:source['題目']||'', 答案:source['答案'], answerSet,
+            question_img:imagePath(source.question_img||source.image||source.圖片||null,level),
+            '①':source['①']||source['1']||'', '②':source['②']||source['2']||'',
+            '③':source['③']||source['3']||'', '④':source['④']||source['4']||'',
+            '①_img':imagePath(source['①_img']||source['1_img']||null,level),
+            '②_img':imagePath(source['②_img']||source['2_img']||null,level),
+            '③_img':imagePath(source['③_img']||source['3_img']||null,level),
+            '④_img':imagePath(source['④_img']||source['4_img']||null,level)
+        };
+    });
+}
+function shuffleArray(array) {
+    for(let i=array.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [array[i],array[j]]=[array[j],array[i]]; }
+}
+async function buildExamAction() {
+    const overlay=document.getElementById('loading-overlay');
+    overlay.style.display='flex';
+    const level=currentLevel();
+    const mode=localStorage.getItem('mode')||'sequence';
+    const bankKey=localStorage.getItem('bankKey');
+    const feedbackMode=mode==='exam'?'A':localStorage.getItem('feedbackMode')||'A';
+    const customCount=parseInt(localStorage.getItem('customCount'),10)||40;
+    const customEnabled=localStorage.getItem('customEnabled')!=='false';
+    const defs=mode==='exam'?bankDefs(level):(mode==='reading'?[BANK_BY_KEY[bankKey]]: [BANK_BY_KEY[bankKey]]);
+    try { await ensureBanksLoaded(defs.filter(Boolean).map(b=>b.key)); }
+    catch(error) { overlay.style.display='none'; return; }
+    let questions=[];
+    if(mode==='exam') {
+        const major=LEVELS[level].banks.flatMap(bank=>flattenBank(dbCache[bank.key],bank.key,level));
+        if(level==='B') {
+            const single=major.filter(q=>!isMulti(q));
+            const multiple=major.filter(q=>isMulti(q));
+            if(single.length<44||multiple.length<20) {
+                alert(`乙級題庫題型數量不足（單選 ${single.length} 題、複選 ${multiple.length} 題），無法依 44 單選＋20 複選組成正式比例試卷。`);
+                overlay.style.display='none'; return;
+            }
+            shuffleArray(single); shuffleArray(multiple);
+            questions=[...single.slice(0,44),...multiple.slice(0,20)];
+        } else {
+            shuffleArray(major);
+            questions=major.slice(0,64);
+        }
+        for(const bank of COMMON_BANKS) {
+            const pool=flattenBank(dbCache[bank.key],bank.key,level);
+            shuffleArray(pool);
+            if(pool.length<4) { alert(`${bank.title} 題庫未滿4題，無法組成正式模擬考。`); overlay.style.display='none'; return; }
+            questions.push(...pool.slice(0,4));
+        }
+        shuffleArray(questions);
+    } else {
+        const pool=flattenBank(dbCache[bankKey],bankKey,level);
+        pool.sort((a,b)=>cnToAn(a.origKey)-cnToAn(b.origKey));
+        if(mode==='random') shuffleArray(pool);
+        questions=(mode==='reading'||!customEnabled)?pool:pool.slice(0,Math.min(customCount,pool.length));
+    }
+    currentExam={level,mode,bankKey,feedbackMode,questions,currentIndex:0,userAnswers:{},confirmed:{},timerId:null,timeSpent:0,timeLeft:6000};
+    currentReport=null;
+    overlay.style.display='none';
+    if(mode==='reading') renderReadingView();
+    else { renderQuizView(); startTimer(); }
+}
+function startTimer() {
+    if(currentExam.mode==='exam') {
+        currentExam.timerId=setInterval(()=>{
+            currentExam.timeLeft--; updateTimerDisplay();
+            if(currentExam.timeLeft<=0) { clearInterval(currentExam.timerId); alert('⏱️ 考試時間到！系統已自動交卷。'); submitExam(); }
+        },1000);
+    } else {
+        currentExam.timerId=setInterval(()=>{currentExam.timeSpent++;updateTimerDisplay();},1000);
+    }
+}
+function updateTimerDisplay() {
+    const el=document.getElementById('timer-text'); if(!el) return;
+    const seconds=currentExam.mode==='exam'?currentExam.timeLeft:currentExam.timeSpent;
+    const m=Math.floor(seconds/60), s=seconds%60;
+    el.innerText=currentExam.mode==='exam'?`⏳ 倒數 ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`⏱️ 已用 ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+function typeBadge(q) { return `<span class="question-type-badge">${isMulti(q)?'複選題（四選二至四）':'單選題（四選一）'}</span>`; }
+function optionHtml(q,num,selected,reveal=false,reading=false) {
+    const ch=['','①','②','③','④'][num], text=q[ch], img=q[`${ch}_img`];
+    if(!text&&!img) return '';
+    const correct=(q.answerSet||[]).includes(num);
+    const wrong=selected&&!correct;
+    const state=reveal?(correct?'correct-reveal':wrong?'wrong-reveal':''):selected?'selected':'';
+    const icon=isMulti(q)?(selected?'☑':'☐'):(selected?'◉':'◯');
+    return `<div class="option-item ${state}" data-option-num="${num}" ${reading?'':'onclick="selectOptionAction('+num+')"'}>
+        <div class="option-label-row"><span class="selection-mark">${icon}</span><div><strong>${ch}</strong> ${text}</div></div>
+        ${img?`<img class="option-sub-img dbl-clickable-img" src="${img}" alt="選項圖" onerror="this.style.display='none'">`:''}
+    </div>`;
+}
+function renderQuizView() {
+    const q=currentExam.questions[currentExam.currentIndex];
+    if(!q) { alert('沒有可顯示的題目。'); renderHome(); return; }
+    const total=currentExam.questions.length, idx=currentExam.currentIndex;
+    const pct=Math.round((idx/total)*100), selected=currentExam.userAnswers[idx]||[];
+    const revealed=currentExam.feedbackMode==='B'&&!!currentExam.confirmed[idx];
+    document.getElementById('header-title').innerText=currentExam.mode==='exam'?LEVELS[currentExam.level].examTitle:'⚡ 練習進行中';
+    let html=`<div class="quiz-info-bar"><span>📝 題號：${idx+1} / ${total} 題</span><span id="timer-text">載入時間中...</span></div>
+        <div class="progress-wrapper"><div class="progress-bar" style="width:${pct}%"></div></div>
+        <div class="quiz-card"><div class="question-meta">${q.bankLabel} · ${q.origKey}</div>${typeBadge(q)}
+        <div class="quiz-question">(${idx+1}) ${q.題目}</div>`;
+    if(q.question_img) html+=`<div class="quiz-image-container"><img class="quiz-img dbl-clickable-img" src="${q.question_img}" alt="題目圖片" onerror="this.style.display='none'"><div style="font-size:.8rem;color:#888;margin-top:5px;">提示：圖片連點兩下可放大</div></div>`;
+    html+='<div class="options-list">';
+    for(let n=1;n<=4;n++) html+=optionHtml(q,n,selected.includes(n),revealed,false);
+    html+='</div>';
+    if(revealed) html+=`<div class="answer-reveal">正確答案：${formatAnswer(q.answerSet)}</div>`;
+    html+='</div>';
+    const modeB=currentExam.feedbackMode==='B', confirmed=!!currentExam.confirmed[idx];
+    let button=modeB?(confirmed?(idx===total-1?'🚀 結束練習，查看報告':'下一題'):'確認答案'):(idx===total-1?'🚀 檢查完畢，交卷':'下一題');
+    html+=`<footer class="control-bar"><button class="nav-btn" onclick="prevQuestion()" ${modeB||idx===0?'disabled':''}>← 上一題</button><button class="action-btn" onclick="centerActionClick()">${button}</button><button class="nav-btn" onclick="nextQuestion()" ${modeB||idx===total-1?'disabled':''}>下一題 →</button></footer>`;
+    document.getElementById('app-container').innerHTML=html;
+    document.body.classList.add('has-control-bar');
+    updateTimerDisplay(); setupMobileImageEvents();
+    if(window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
+}
+function renderReadingView() {
+    document.body.classList.remove('has-control-bar');
+    document.getElementById('header-title').innerText=`📖 直接閱讀｜${bankTitle(currentExam.bankKey)}`;
+    let html=`<div class="reading-toolbar"><button class="secondary-btn" style="margin:0" onclick="renderHome()">← 返回設定</button><span>共 ${currentExam.questions.length} 題，正確答案已標示</span></div>`;
+    currentExam.questions.forEach((q,idx)=>{
+        html+=`<section class="reading-question"><div class="quiz-card"><div class="question-meta">${q.bankLabel} · ${q.origKey}</div>${typeBadge(q)}<div class="quiz-question">(${idx+1}) ${q.題目}</div>`;
+        if(q.question_img) html+=`<div class="quiz-image-container"><img class="quiz-img dbl-clickable-img" src="${q.question_img}" alt="題目圖片" onerror="this.style.display='none'"></div>`;
+        html+='<div class="options-list">';
+        for(let n=1;n<=4;n++) html+=optionHtml(q,n,false,true,true);
+        html+=`</div><div class="answer-reveal">正確答案：${formatAnswer(q.answerSet)}</div></div></section>`;
+    });
+    html+='<button class="secondary-btn" onclick="renderHome()">返回設定</button>';
+    document.getElementById('app-container').innerHTML=html;
+    setupMobileImageEvents();
+    if(window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
+}
+function selectOptionAction(num) {
+    const idx=currentExam.currentIndex,q=currentExam.questions[idx];
+    if(!q||currentExam.confirmed[idx]) return;
+    const old=currentExam.userAnswers[idx]||[];
+    const next=isMulti(q)?(old.includes(num)?old.filter(n=>n!==num):[...old,num].sort()):[num];
+    currentExam.userAnswers[idx]=next;
+    document.querySelectorAll('.option-item[data-option-num]').forEach(el=>{
+        const option=Number(el.dataset.optionNum),chosen=next.includes(option);
+        el.classList.toggle('selected',chosen);
+        const mark=el.querySelector('.selection-mark');
+        if(mark) mark.textContent=isMulti(q)?(chosen?'☑':'☐'):(chosen?'◉':'◯');
+    });
+}
+function checkCurrentAnswered() {
+    if(!(currentExam.userAnswers[currentExam.currentIndex]||[]).length) { alert('⚠️ 您尚未作答本題！'); return false; }
+    return true;
+}
+function centerActionClick() {
+    const idx=currentExam.currentIndex,total=currentExam.questions.length;
+    if(currentExam.feedbackMode==='B') {
+        if(!currentExam.confirmed[idx]) {
+            if(!checkCurrentAnswered()) return;
+            currentExam.confirmed[idx]=true; renderQuizView();
+        } else if(idx===total-1) submitExam(); else nextQuestion();
+    } else if(idx===total-1) triggerSubmissionFlow();
+    else if(checkCurrentAnswered()) nextQuestion();
+}
+function nextQuestion() {
+    if(currentExam.feedbackMode==='A'&&!checkCurrentAnswered()) return;
+    if(currentExam.currentIndex<currentExam.questions.length-1) { currentExam.currentIndex++; renderQuizView(); }
+}
+function prevQuestion() {
+    if(currentExam.feedbackMode==='B') return;
+    if(currentExam.currentIndex>0) { currentExam.currentIndex--; renderQuizView(); }
+}
+function triggerSubmissionFlow() {
+    const total=currentExam.questions.length,answered=Object.values(currentExam.userAnswers).filter(a=>a&&a.length).length;
+    const unanswered=total-answered;
+    const msg=unanswered?`⚠️ 尚有 ${unanswered} 題未作答。確定要交卷嗎？`:'確定要正式交卷評分嗎？';
+    if(confirm(msg)) submitExam();
+}
+function bindGlobalKeydown() {
+    window.addEventListener('keydown',e=>{
+        if(!document.querySelector('.action-btn')) return;
+        if(['1','2','3','4'].includes(e.key)) selectOptionAction(Number(e.key));
+        if(e.key==='Enter') { e.preventDefault(); centerActionClick(); }
+        if(e.key==='ArrowLeft') prevQuestion();
+        if(e.key==='ArrowRight') nextQuestion();
+    });
+}
+function setupMobileImageEvents() {
+    document.querySelectorAll('.dbl-clickable-img').forEach(img=>{
+        let lastTap=0;
+        img.addEventListener('click',e=>{
+            const now=Date.now();
+            if(now-lastTap<350&&now-lastTap>0) {
+                const lightbox=document.getElementById('lightbox');
+                document.getElementById('lightbox-img').src=img.src;
+                lightbox.style.display='flex'; e.preventDefault();
+            }
+            lastTap=now;
         });
-
-        function initTheme() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            if (savedTheme === 'dark') {
-                document.body.classList.add('dark-mode');
-                document.getElementById('theme-btn').innerText = "☀️ 白天模式";
-            }
+    });
+}
+function closeLightbox() { document.getElementById('lightbox').style.display='none'; }
+function questionIsCorrect(q,answer) { return sameAnswer(q.answerSet,answer||[]); }
+function submitExam() {
+    if(currentExam.timerId) clearInterval(currentExam.timerId);
+    document.body.classList.remove('has-control-bar');
+    const total=currentExam.questions.length;
+    let singleCorrect=0,multiCorrect=0,answered=0;
+    currentExam.questions.forEach((q,idx)=>{
+        const response=currentExam.userAnswers[idx]||[];
+        if(response.length) answered++;
+        if(questionIsCorrect(q,response)) { if(isMulti(q)) multiCorrect++; else singleCorrect++; }
+    });
+    const correctCount=singleCorrect+multiCorrect, wrongCount=total-correctCount;
+    const level=currentExam.level;
+    const score=currentExam.mode==='exam'?(level==='B'?singleCorrect+multiCorrect*2:correctCount*1.25):Math.round(correctCount/Math.max(1,total)*100);
+    const pass=currentExam.mode==='exam'?score>=60:wrongCount/Math.max(1,total)<=.5;
+    currentReport={total,singleCorrect,multiCorrect,correctCount,wrongCount,answered,score,pass};
+    document.getElementById('header-title').innerText='📊 測驗成果報告';
+    const status=currentExam.mode==='exam'
+        ?(pass?'<span class="status-badge badge-pass">🎉 達 60 分及格標準</span>':'<span class="status-badge badge-fail">❌ 未達 60 分，再接再厲</span>')
+        :(pass?'<span class="status-badge badge-pass">🎉 練習完成，繼續保持！</span>':'<span class="status-badge badge-fail">❌ 錯誤率偏高，再接再厲！</span>');
+    const review=wrongCount?'<button class="action-btn" style="margin:10px 0" onclick="renderWrongReviewView()">🔍 查看錯題檢討</button>':'<p style="color:var(--correct);font-weight:bold">🎉 全部答對！</p>';
+    const detail=currentExam.mode==='exam'&&level==='B'?`單選答對：${singleCorrect} 題｜複選答對：${multiCorrect} 題（全對給分）<br>`:'';
+    const title=currentExam.mode==='exam'?(level==='B'?'數位電子乙級正式比例模擬考':'工業電子丙級模擬考'):'自訂題目練習結果';
+    const scoreDisplay=Number.isInteger(score)?String(score):String(Number(score.toFixed(2)));
+    const html=`<div class="report-card"><h2>測驗已結束</h2><p style="font-size:1.1rem">${title}</p><div class="score-big">${scoreDisplay}${currentExam.mode==='exam'?'分':'%'}</div><div>${status}</div>
+        <p style="font-size:1.05rem;line-height:1.9;margin:20px 0">共計：<strong>${total}</strong> 題｜答對：<span style="color:var(--correct);font-weight:bold">${correctCount}</span> 題<br>${detail}答錯／未答：<span style="color:var(--wrong);font-weight:bold">${wrongCount}</span> 題</p>
+        <div style="max-width:400px;margin:0 auto 15px">${review}<button class="secondary-btn" onclick="renderHome()">返回首頁</button></div></div>`;
+    document.getElementById('app-container').innerHTML=html;
+}
+function renderWrongReviewView() {
+    document.getElementById('header-title').innerText='🔍 本次錯題檢討';
+    let html='<div class="setup-card"><h2 style="margin-top:0;color:var(--wrong)">錯題清單</h2><p>顯示答錯或未作答的題目；複選必須完全一致才算答對。</p><div class="wrong-review-container">';
+    let wrongNo=0;
+    currentExam.questions.forEach((q,idx)=>{
+        const user=currentExam.userAnswers[idx]||[];
+        if(questionIsCorrect(q,user)) return;
+        wrongNo++;
+        html+=`<div class="wrong-review-card"><div class="question-meta">${q.bankLabel} · ${q.origKey}</div>${typeBadge(q)}<div class="quiz-question"><strong>錯題 ${wrongNo}</strong>（原第 ${idx+1} 題）：${q.題目}</div>`;
+        if(q.question_img) html+=`<div class="quiz-image-container" style="text-align:left"><img class="quiz-img dbl-clickable-img" src="${q.question_img}" alt="題目圖片" style="max-height:160px" onerror="this.style.display='none'"></div>`;
+        html+='<div class="review-options-box">';
+        for(let n=1;n<=4;n++) {
+            const ch=['','①','②','③','④'][n],text=q[ch],img=q[`${ch}_img`];
+            if(!text&&!img) continue;
+            html+=`<div class="review-opt-item"><div><strong>${ch}</strong> ${text}</div>${img?`<img class="option-sub-img dbl-clickable-img" src="${img}" alt="選項圖" onerror="this.style.display='none'">`:''}</div>`;
         }
-
-        function toggleTheme() {
-            const isDark = document.body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            document.getElementById('theme-btn').innerText = isDark ? "☀️ 白天模式" : "🌙 夜間模式";
-        }
-
-        function renderLocalStorageSettings() {
-            if(!localStorage.getItem('mode')) localStorage.setItem('mode', 'sequence');
-            if(!localStorage.getItem('bankKey')) localStorage.setItem('bankKey', 'item01');
-            if(!localStorage.getItem('feedbackMode')) localStorage.setItem('feedbackMode', 'A');
-            if(!localStorage.getItem('customEnabled')) localStorage.setItem('customEnabled', 'true');
-            if(!localStorage.getItem('customCount')) localStorage.setItem('customCount', '40');
-        }
-
-        async function preloadAllJson() {
-            for (let key in JSON_FILES) {
-                if (!dbCache[key]) {
-                    fetch(JSON_FILES[key])
-                        .then(res => res.json())
-                        .then(data => { dbCache[key] = data; })
-                        .catch(e => console.warn(`預載失敗: ${JSON_FILES[key]}`));
-                }
-            }
-        }
-
-        // ==================== SPA 視圖 1：首頁 ====================
-        function renderHome() {
-            if(currentExam.timerId) clearInterval(currentExam.timerId);
-            document.body.classList.remove('has-control-bar');
-            document.getElementById('header-title').innerText = "丙級刷題網站";
-            
-            const mode = localStorage.getItem('mode');
-            const bankKey = localStorage.getItem('bankKey');
-            const feedbackMode = localStorage.getItem('feedbackMode');
-            const customCount = localStorage.getItem('customCount');
-
-            const isExam = mode === 'exam';
-            const customEnabled = localStorage.getItem('customEnabled') !== 'false'; // 預設 true
-
-            let html = `
-                <div class="setup-card">
-                    <div class="setup-group">
-                        <label>1. 選擇測驗模式</label>
-                        <div class="radio-set">
-                            <div class="radio-btn ${mode==='sequence'?'active':''}" onclick="setParam('mode','sequence')">循序練習</div>
-                            <div class="radio-btn ${mode==='random'?'active':''}" onclick="setParam('mode','random')">隨機出題</div>
-                            <div class="radio-btn ${mode==='exam'?'active':''}" onclick="setParam('mode','exam')">模擬正式測驗</div>
-                        </div>
-                    </div>
-
-                    <div class="setup-group">
-                        <label>2. 選擇題庫範圍</label>
-                        <select id="bank-select" onchange="setParam('bankKey', this.value)" ${isExam?'disabled':''}>
-                            <option value="item01" ${bankKey==='item01'?'selected':''}>工作項目 02 - 電子電機識圖 (共57題)</option>
-                            <option value="item02" ${bankKey==='item02'?'selected':''}>工作項目 03 - 手工具及量具知識 (共56題)</option>
-                            <option value="item03" ${bankKey==='item03'?'selected':''}>工作項目 04 - 零組件知識 (共51題)</option>
-                            <option value="item04" ${bankKey==='item04'?'selected':''}>工作項目 05 - 裝配知識 (共55題)</option>
-                            <option value="item05" ${bankKey==='item05'?'selected':''}>工作項目 06 - 電子儀表使用知識 (共44題)</option>
-                            <option value="item06" ${bankKey==='item06'?'selected':''}>工作項目 07 - 測試知識 (共48題)</option>
-                            <option value="item07" ${bankKey==='item07'?'selected':''}>工作項目 08 - 電工學 (共128題)</option>
-                            <option value="item08" ${bankKey==='item08'?'selected':''}>工作項目 09 - 電子學 (共147題)</option>
-                            <option value="item09" ${bankKey==='item09'?'selected':''}>工作項目 10 - 數位系統 (共65題)</option>
-                            <option value="common01" ${bankKey==='common01'?'selected':''}>共同項目 01 - 工作倫理 (共100題)</option>
-                            <option value="common02" ${bankKey==='common02'?'selected':''}>共同項目 02 - 節能減碳 (共100題)</option>
-                            <option value="common03" ${bankKey==='common03'?'selected':''}>共同項目 03 - 環境保護 (共100題)</option>
-                            <option value="common04" ${bankKey==='common04'?'selected':''}>共同項目 04 - 職業安全 (共100題)</option>
-                        </select>
-                    </div>
-
-                    <div class="setup-group" id="count-group" style="${isExam?'display:none;':''}">
-                        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; user-select:none;">
-                            3. 自訂練習題數
-                            <span class="toggle-switch ${customEnabled?'on':''}" onclick="toggleCustomCount()" title="${customEnabled?'已啟用自訂題數':'使用全部題目'}">
-                                <span class="toggle-knob"></span>
-                            </span>
-                            <span style="font-size:0.8rem; font-weight:normal; color:${customEnabled?'var(--primary)':'#aaa'};">${customEnabled?'已啟用':'全部題目'}</span>
-                        </label>
-                        <input type="number" value="${customCount}" min="5" max="200" onchange="setParam('customCount', this.value)" ${customEnabled?'':'disabled'}>
-                    </div>
-
-                    <div class="setup-group">
-                        <label>${isExam?'3. 答案回饋模式 (已強制鎖定)':'4. 選擇答案回饋模式'}</label>
-                        <div class="radio-set">
-                            <div class="radio-btn ${isExam?'disabled':(feedbackMode==='A'?'active':'')}" onclick="setParam('feedbackMode','A')">模式 A (寫完再對)</div>
-                            <div class="radio-btn ${isExam?'disabled':(feedbackMode==='B'?'active':'')}" onclick="setParam('feedbackMode','B')">模式 B (即時翻牌)</div>
-                        </div>
-                    </div>
-
-                    <button class="start-btn" onclick="buildExamAction()">🚀 開始全力衝刺</button>
-                </div>
-            `;
-            document.getElementById('app-container').innerHTML = html;
-        }
-
-        function setParam(key, val) {
-            localStorage.setItem(key, val);
-            renderHome(); 
-        }
-
-        function toggleCustomCount() {
-            const current = localStorage.getItem('customEnabled') !== 'false';
-            localStorage.setItem('customEnabled', (!current).toString());
-            renderHome();
-        }
-
-        // ==================== 抽題引擎 ====================
-        async function buildExamAction() {
-            document.getElementById('loading-overlay').style.display = 'flex';
-            
-            const mode = localStorage.getItem('mode');
-            const bankKey = localStorage.getItem('bankKey');
-            const feedbackMode = mode === 'exam' ? 'A' : localStorage.getItem('feedbackMode');
-            const customCount = parseInt(localStorage.getItem('customCount')) || 40;
-            const customEnabled = localStorage.getItem('customEnabled') !== 'false';
-
-            for (let k in JSON_FILES) {
-                if (!dbCache[k]) {
-                    try {
-                        let res = await fetch(JSON_FILES[k]);
-                        dbCache[k] = await res.json();
-                    } catch(e) {
-                        alert(`載入題庫失敗: ${JSON_FILES[k]}`);
-                        document.getElementById('loading-overlay').style.display = 'none';
-                        return;
-                    }
-                }
-            }
-
-            let rawQuestions = [];
-            
-            if (mode === 'exam') {
-                const majorKeys = ["item01", "item02", "item03", "item04", "item05", "item06", "item07", "item08", "item09"];
-                const commonKeys = ["common01", "common02", "common03", "common04"];
-                
-                let allMajorsPool = [];
-                majorKeys.forEach(k => {
-                    allMajorsPool = allMajorsPool.concat(flattenBank(dbCache[k], k));
-                });
-                
-                shuffleArray(allMajorsPool);
-                rawQuestions = allMajorsPool.slice(0, 64);
-                
-                commonKeys.forEach(k => {
-                    let pool = flattenBank(dbCache[k], k);
-                    shuffleArray(pool);
-                    rawQuestions = rawQuestions.concat(pool.slice(0, 4));
-                });
-                
-                shuffleArray(rawQuestions); 
-            } else {
-                let pool = flattenBank(dbCache[bankKey], bankKey);
-                if (mode === 'random') {
-                    shuffleArray(pool);
-                    rawQuestions = customEnabled ? pool.slice(0, customCount) : pool;
-                } else {
-                    pool.sort((a, b) => cnToAn(a.origKey) - cnToAn(b.origKey));
-                    rawQuestions = customEnabled ? pool.slice(0, customCount) : pool;
-                }
-            }
-
-            currentExam = {
-                mode: mode,
-                bankKey: bankKey,
-                feedbackMode: feedbackMode,
-                questions: rawQuestions,
-                currentIndex: 0,
-                userAnswers: {},
-                confirmed: {},
-                timeSpent: 0,
-                timeLeft: 6000,
-                timerId: null
-            };
-
-            document.getElementById('loading-overlay').style.display = 'none';
-            renderQuizView();
-            startTimer();
-        }
-
-        function flattenBank(jsonObj, bankLabel) {
-            let list = [];
-            for (let k in jsonObj) {
-                list.push({
-                    origKey: k,
-                    bankLabel: bankLabel,
-                    題目: jsonObj[k].題目,
-                    答案: jsonObj[k].答案,
-                    question_img: jsonObj[k].question_img || jsonObj[k].image || jsonObj[k].圖片 || null,
-                    "①": jsonObj[k]["①"] || jsonObj[k]["1"] || "",
-                    "②": jsonObj[k]["②"] || jsonObj[k]["2"] || "",
-                    "③": jsonObj[k]["③"] || jsonObj[k]["3"] || "",
-                    "④": jsonObj[k]["④"] || jsonObj[k]["4"] || "",
-                    "①_img": jsonObj[k]["①_img"] || jsonObj[k]["1_img"] || null,
-                    "②_img": jsonObj[k]["②_img"] || jsonObj[k]["2_img"] || null,
-                    "③_img": jsonObj[k]["③_img"] || jsonObj[k]["3_img"] || null,
-                    "④_img": jsonObj[k]["④_img"] || jsonObj[k]["4_img"] || null
-                });
-            }
-            return list;
-        }
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
-        function startTimer() {
-            if(currentExam.mode === 'exam') {
-                currentExam.timerId = setInterval(() => {
-                    currentExam.timeLeft--;
-                    updateTimerDisplay();
-                    if(currentExam.timeLeft <= 0) {
-                        clearInterval(currentExam.timerId);
-                        alert("⏱️ 考試時間到！系統已自動為您交卷。");
-                        submitExam();
-                    }
-                }, 1000);
-            } else {
-                currentExam.timerId = setInterval(() => {
-                    currentExam.timeSpent++;
-                    updateTimerDisplay();
-                }, 1000);
-            }
-        }
-
-        function updateTimerDisplay() {
-            const el = document.getElementById('timer-text');
-            if(!el) return;
-            if(currentExam.mode === 'exam') {
-                let m = Math.floor(currentExam.timeLeft / 60);
-                let s = currentExam.timeLeft % 60;
-                el.innerText = `⏳ 倒計時 ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-            } else {
-                let m = Math.floor(currentExam.timeSpent / 60);
-                let s = currentExam.timeSpent % 60;
-                el.innerText = `⏱️ 已花費時間 ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-            }
-        }
-
-        // ==================== SPA 視圖 2：測驗頁面 ====================
-        function renderQuizView() {
-            const q = currentExam.questions[currentExam.currentIndex];
-            const total = currentExam.questions.length;
-            const idx = currentExam.currentIndex;
-            const pct = Math.round(((idx) / total) * 100);
-
-            document.getElementById('header-title').innerText = currentExam.mode === 'exam' ? "🏆 工業電子丙級模擬學科測驗" : "⚡ 衝刺練習進行中";
-
-            let html = `
-                <div class="quiz-info-bar">
-                    <span>📝 題號：${idx + 1} / ${total} 題</span>
-                    <span id="timer-text">載入時間中...</span>
-                </div>
-                <div class="progress-wrapper">
-                    <div class="progress-bar" style="width: ${pct}%"></div>
-                </div>
-
-                <div class="quiz-card">
-                    <div class="quiz-question">
-                        (${idx + 1}) ${q.題目}
-                    </div>
-            `;
-
-            if (q.question_img) {
-                html += `
-                    <div class="quiz-image-container">
-                        <img class="quiz-img dbl-clickable-img" src="${q.question_img}" alt="電路圖">
-                        <div style="font-size:0.8rem; color:#888; margin-top:5px;">📱 提示：點擊圖片「兩下」可放大看完整細節</div>
-                    </div>
-                `;
-            }
-
-            html += `<div class="options-list">`;
-            for (let num = 1; num <= 4; num++) {
-                const optChinese = ['零', '①', '②', '③', '④'][num];
-                const optText = q[optChinese];
-                const optImg = q[`${optChinese}_img`];
-                
-                let classState = "";
-                if(currentExam.userAnswers[idx] === num) classState = "selected";
-
-                if(currentExam.feedbackMode === 'B') {
-                    if(currentExam.confirmed[idx]) {
-                        if(num == q.答案) {
-                            classState = "correct-reveal";
-                        } else if(currentExam.userAnswers[idx] === num) {
-                            classState = "wrong-reveal";
-                        }
-                    }
-                }
-
-                html += `
-                    <div class="option-item ${classState}" onclick="selectOptionAction(${num})">
-                        <div><strong>${optChinese}</strong> ${optText}</div>
-                `;
-                if(optImg) {
-                    html += `<img class="option-sub-img dbl-clickable-img" src="${optImg}" alt="選項圖">`;
-                }
-                html += `</div>`;
-            }
-            html += `</div></div>`;
-
-            let isModeB = currentExam.feedbackMode === 'B';
-            let hasConfirmedB = currentExam.confirmed[idx];
-            
-            let centerBtnText = "確認答案";
-            if (isModeB && hasConfirmedB) centerBtnText = "下一題";
-            if (isModeB && idx === total - 1 && hasConfirmedB) centerBtnText = "🚀 結束練習，查看報告";
-            if (!isModeB && idx === total - 1) centerBtnText = "🚀 檢查完畢，送出交卷";
-
-            html += `
-                <footer class="control-bar">
-                    <button class="nav-btn" onclick="prevQuestion()" ${isModeB || idx===0 ? 'disabled':''}>← 上一題</button>
-                    <button class="action-btn" onclick="centerActionClick()">${centerBtnText}</button>
-                    <button class="nav-btn" onclick="nextQuestion()" ${isModeB || idx===total-1 ? 'disabled':''}>下一題 →</button>
-                </footer>
-            `;
-
-            document.getElementById('app-container').innerHTML = html;
-            document.body.classList.add('has-control-bar');
-            updateTimerDisplay();
-            setupMobileImageEvents();
-
-            if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
-                window.MathJax.typesetPromise();
-            }
-        }
-
-        // ==================== 互動與防呆限制邏輯 ====================
-        function selectOptionAction(num) {
-            const idx = currentExam.currentIndex;
-            if(currentExam.feedbackMode === 'B' && currentExam.confirmed[idx]) return;
-            
-            currentExam.userAnswers[idx] = num;
-            
-            const items = document.querySelectorAll('.option-item');
-            items.forEach((item, index) => {
-                item.classList.remove('selected');
-                if(index === (num - 1)) item.classList.add('selected');
-            });
-        }
-
-        function checkCurrentAnswered() {
-            const idx = currentExam.currentIndex;
-            if (!currentExam.userAnswers[idx]) {
-                alert("⚠️ 您尚未選擇本題答案！請作答後才能切換至下一題。");
-                return false;
-            }
-            return true;
-        }
-
-        function centerActionClick() {
-            const idx = currentExam.currentIndex;
-            const total = currentExam.questions.length;
-            const isModeB = currentExam.feedbackMode === 'B';
-
-            if(isModeB) {
-                if(!currentExam.confirmed[idx]) {
-                    if(!currentExam.userAnswers[idx]) { alert("⚠️ 請選取一個選項才能進行翻牌！"); return; }
-                    currentExam.confirmed[idx] = true;
-                    renderQuizView(); 
-                } else {
-                    if(idx === total - 1) {
-                        submitExam();
-                    } else {
-                        nextQuestion();
-                    }
-                }
-            } else {
-                if(idx === total - 1) {
-                    triggerSubmissionFlow();
-                } else {
-                    if (checkCurrentAnswered()) {
-                        nextQuestion();
-                    }
-                }
-            }
-        }
-
-        function nextQuestion() {
-            if (currentExam.feedbackMode === 'A') {
-                if (!checkCurrentAnswered()) return;
-            }
-
-            if(currentExam.currentIndex < currentExam.questions.length - 1) {
-                currentExam.currentIndex++;
-                renderQuizView();
-            }
-        }
-
-        function prevQuestion() {
-            if(currentExam.feedbackMode === 'B') return; 
-            if(currentExam.currentIndex > 0) {
-                currentExam.currentIndex--;
-                renderQuizView();
-            }
-        }
-
-        function triggerSubmissionFlow() {
-            const total = currentExam.questions.length;
-            let answeredCount = Object.keys(currentExam.userAnswers).length;
-            let unansweredCount = total - answeredCount;
-
-            let msg = "確定要正式交卷評分了嗎？";
-            if (unansweredCount > 0) {
-                msg = `⚠️ 警告：您還有 ${unansweredCount} 題尚未作答！\n確定要放棄這些題目並直接交卷嗎？`;
-            }
-
-            if(confirm(msg)) submitExam();
-        }
-
-        function bindGlobalKeydown() {
-            window.addEventListener('keydown', (e) => {
-                const actionBtn = document.querySelector('.action-btn');
-                if(!actionBtn) return; 
-
-                if(e.key === '1') selectOptionAction(1);
-                if(e.key === '2') selectOptionAction(2);
-                if(e.key === '3') selectOptionAction(3);
-                if(e.key === '4') selectOptionAction(4);
-                
-                if(e.key === 'Enter') {
-                    e.preventDefault();
-                    centerActionClick();
-                }
-                if(e.key === 'ArrowLeft') {
-                    prevQuestion();
-                }
-                if(e.key === 'ArrowRight') {
-                    nextQuestion(); 
-                }
-            });
-        }
-
-        // ==================== 雙擊（點兩下）放大邏輯 ====================
-        function setupMobileImageEvents() {
-            const imgs = document.querySelectorAll('.dbl-clickable-img');
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-
-            imgs.forEach(img => {
-                let lastTap = 0;
-                img.addEventListener('click', (e) => {
-                    const now = new Date().getTime();
-                    const timespan = now - lastTap;
-                    
-                    if (timespan < 300 && timespan > 0) {
-                        lightboxImg.src = img.src;
-                        lightbox.style.display = 'flex';
-                        e.preventDefault();
-                    }
-                    lastTap = now;
-                });
-            });
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
-
-        // ==================== SPA 視圖 3：成績報告 ====================
-        function submitExam() {
-            if(currentExam.timerId) clearInterval(currentExam.timerId);
-            document.body.classList.remove('has-control-bar');
-            
-            let total = currentExam.questions.length;
-            let correctCount = 0;
-            
-            currentExam.questions.forEach((q, idx) => {
-                if(currentExam.userAnswers[idx] == q.答案) {
-                    correctCount++;
-                }
-            });
-
-            let wrongCount = total - correctCount;
-            let wrongRate = (wrongCount / total) * 100; 
-
-            let finalScore = 0;
-            let statusBadgeHtml = "";
-
-            if (currentExam.mode === 'exam') {
-                finalScore = correctCount * 1.25;
-                if (finalScore >= 60) {
-                    statusBadgeHtml = `<span class="status-badge badge-pass">🎉 恭喜通過模擬學科標準！</span>`;
-                } else {
-                    statusBadgeHtml = `<span class="status-badge badge-fail">❌ 分數未及格，再接再厲！</span>`;
-                }
-            } else {
-                finalScore = Math.round((correctCount / total) * 100);
-                if (wrongRate > 50) {
-                    statusBadgeHtml = `<span class="status-badge badge-fail">❌ 錯誤率偏高 (${Math.round(wrongRate)}%)，再接再厲！</span>`;
-                } else {
-                    statusBadgeHtml = `<span class="status-badge badge-pass">🎉 練習完成，繼續保持！</span>`;
-                }
-            }
-
-            document.getElementById('header-title').innerText = "📊 測驗成果報告";
-
-            let reviewBtnHtml = "";
-            if(wrongCount > 0) {
-                reviewBtnHtml = `<button class="action-btn" style="margin: 10px 0;" onclick="renderWrongReviewView()">🔍 查看本次錯題檢討</button>`;
-            } else {
-                reviewBtnHtml = `<p style="color:var(--correct); font-weight:bold; margin:15px 0;">🎉 完美滿分！無錯題需要檢討！</p>`;
-            }
-
-            let html = `
-                <div class="report-card">
-                    <h2>測驗已順利結束！</h2>
-                    <p style="font-size: 1.1rem; color: #666;">
-                        ${currentExam.mode==='exam'?'正式模擬考（滿分 100 分）':'自訂題目練習答題結果'}
-                    </p>
-                    
-                    <div class="score-big">${finalScore}${currentExam.mode==='exam'?'分':'%'}</div>
-                    
-                    <div>
-                        ${statusBadgeHtml}
-                    </div>
-
-                    <p style="font-size:1.1rem; margin-bottom: 20px; line-height: 1.8;">
-                        共計：<strong>${total}</strong> 題 ｜ 
-                        答對：<span style="color:var(--correct); font-weight:bold;">${correctCount}</span> 題 <br>
-                        答錯 / 未答：<span style="color:var(--wrong); font-weight:bold;">${wrongCount}</span> 題 ｜ 
-                        當前錯誤率：<strong>${Math.round(wrongRate)}%</strong>
-                    </p>
-
-                    <div style="max-width:400px; margin: 0 auto 15px auto;">
-                        ${reviewBtnHtml}
-                        <button class="secondary-btn" onclick="renderHome()">返回首頁重設練習</button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('app-container').innerHTML = html;
-        }
-
-        // ==================== SPA 視圖 4：全新獨立錯題檢閱頁面 ====================
-        function renderWrongReviewView() {
-            document.getElementById('header-title').innerText = "🔍 本次錯題加強檢討";
-            
-            let html = `
-                <div class="setup-card">
-                    <h2 style="margin-top:0; color:var(--wrong);">錯題清單檢閱</h2>
-                    <p style="color:#666; margin-bottom:25px;">系統已自動過濾出答錯或未答的題目，請仔細比對正確答案與線路圖。</p>
-                    <div class="wrong-review-container">
-            `;
-
-            let wrongIndex = 1;
-            currentExam.questions.forEach((q, idx) => {
-                if (currentExam.userAnswers[idx] != q.答案) {
-                    const optChinese = ['未作答', '①', '②', '③', '④'];
-                    const userAnsText = currentExam.userAnswers[idx] ? optChinese[currentExam.userAnswers[idx]] : "未作答";
-                    const correctAnsText = optChinese[q.答案];
-
-                    html += `
-                        <div class="wrong-review-card">
-                            <div class="quiz-question" style="font-size:1.1rem; margin-bottom:12px;">
-                                <strong>錯題 ${wrongIndex}</strong> (原第 ${idx + 1} 題)：${q.題目}
-                            </div>
-                    `;
-
-                    // 處理題目的主圖片
-                    if (q.question_img) {
-                        html += `
-                            <div class="quiz-image-container" style="text-align:left; margin-bottom:12px;">
-                                <img class="quiz-img dbl-clickable-img" src="${q.question_img}" alt="電路圖" style="max-height:160px;">
-                            </div>
-                        `;
-                    }
-
-                    // ✨ ✨ 核心優化：渲染 4 個選項，若選項有圖片則一併渲染出來並綁定放大
-                    html += `<div class="review-options-box">`;
-                    for (let n = 1; n <= 4; n++) {
-                        const ch = ['零', '①', '②', '③', '④'][n];
-                        const text = q[ch];
-                        const imgField = q[`${ch}_img`];
-
-                        if (text || imgField) {
-                            html += `<div class="review-opt-item">`;
-                            html += `<div><strong>${ch}</strong> ${text}</div>`;
-                            if (imgField) {
-                                html += `<img class="option-sub-img dbl-clickable-img" src="${imgField}" alt="選項圖">`;
-                            }
-                            html += `</div>`;
-                        }
-                    }
-                    html += `</div>`;
-
-                    // 標記答案對比
-                    html += `
-                            <div class="wrong-review-meta">
-                                <span class="meta-user">您的答案：${userAnsText} ❌</span>
-                                <span class="meta-correct">正確答案：${correctAnsText} 💡</span>
-                            </div>
-                        </div>
-                    `;
-                    wrongIndex++;
-                }
-            });
-
-            html += `
-                    </div>
-                    <button class="start-btn" style="margin-top:20px;" onclick="submitExam()">返回成績報告</button>
-                    <button class="secondary-btn" onclick="renderHome()">返回首頁重設練習</button>
-                </div>
-            `;
-
-            document.getElementById('app-container').innerHTML = html;
-            setupMobileImageEvents(); // 重新將題目主圖及選項圖片綁定雙擊放大
-
-            if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
-                window.MathJax.typesetPromise();
-            }
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
+        html+=`</div><div class="wrong-review-meta"><span class="meta-user">您的答案：${formatAnswer(user)}</span><span class="meta-correct">正確答案：${formatAnswer(q.answerSet)}</span></div></div>`;
+    });
+    html+='</div><button class="start-btn" onclick="submitExam()">返回成績報告</button><button class="secondary-btn" onclick="renderHome()">返回首頁</button></div>';
+    document.getElementById('app-container').innerHTML=html;
+    setupMobileImageEvents();
+    if(window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
 </body>
 </html>
