@@ -694,12 +694,12 @@ window.addEventListener('DOMContentLoaded', () => {
 function initTheme() {
     const saved=localStorage.getItem('theme')||'light';
     if(saved==='dark') document.body.classList.add('dark-mode');
-    document.getElementById('theme-btn').innerText=saved==='dark'?'☀️ 白天模式':'🌙 夜間模式';
+    document.getElementById('theme-btn').innerText=saved==='dark'?'淺色模式':'黑暗模式';
 }
 function toggleTheme() {
     const dark=document.body.classList.toggle('dark-mode');
     localStorage.setItem('theme',dark?'dark':'light');
-    document.getElementById('theme-btn').innerText=dark?'☀️ 白天模式':'🌙 夜間模式';
+    document.getElementById('theme-btn').innerText=dark?'淺色模式':'黑暗模式';
 }
 function renderLocalStorageSettings() {
     if(!localStorage.getItem('level')) localStorage.setItem('level','C');
