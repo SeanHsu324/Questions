@@ -905,7 +905,11 @@ function updateTimerDisplay() {
     const m=Math.floor(seconds/60), s=seconds%60;
     el.innerText=currentExam.mode==='exam'?`⏳ 倒數 ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`⏱️ 已用 ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
-function typeBadge(q) { return `<span class="question-type-badge">${isMulti(q)?'複選題（四選二）':'單選題（四選一）'}</span>`; }
+function typeBadge(q) {
+    const n=(q.answerSet||parseAnswer(q.答案)).length;
+    const cn=['','一','二','三','四'][n]||n;
+    return `<span class="question-type-badge">${n>1?`複選題（四選${cn}）`:'單選題（四選一）'}</span>`;
+}
 function optionHtml(q,num,selected,reveal=false,reading=false) {
     const ch=['','①','②','③','④'][num], text=q[ch], img=q[`${ch}_img`];
     if(!text&&!img) return '';
